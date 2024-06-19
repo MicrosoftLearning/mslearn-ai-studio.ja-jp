@@ -66,7 +66,7 @@ Copilot ソリューションでは、カスタム データをプロンプト �
 - ご利用のデータに基づいて、質問に対する自然言語の応答を生成することができるモデル。
 
 1. Azure AI Studio 内のプロジェクトの左側ナビゲーション ウィンドウで、**[コンポーネント]** の下にある **[デプロイ]** ページを選択します。
-1. 以下の設定を使用して、**text-embedding-ada-002** モデルの新しいデプロイ (**リアルタイム エンドポイント**を使用) を作成します。
+1. 以下の設定を使用して、**text-embedding-ada-002** モデルの新しいデプロイを作成します。
 
     - **[デプロイ名]**: `text-embedding-ada-002`
     - **モデルのバージョン**: *既定値*
@@ -141,7 +141,7 @@ RAG ベースのプロンプト フローでインデックスを使用する前
     - システム メッセージを追加し、チャット履歴を構造化して、プロンプト バリアントを作成します。
     - そのプロンプトを言語モデルに送信して、自然言語の応答を生成します。
 
-1. **[ランタイム]** 一覧の中で、**[開始]** を選択して自動ランタイムを開始します。
+1. **[コンピューティング セッションの開始]** ボタンを使用して、フローのランタイム コンピューティングを開始します。
 
     ランタイムが起動するまで待ちます。 これにより、プロンプト フロー用のコンピューティング コンテキストが提供されます。 待っている間に、**[フロー]** タブ内で、フロー内のツールのセクションを確認します。
 
@@ -153,22 +153,22 @@ RAG ベースのプロンプト フローでインデックスを使用する前
 
 1. **[出力]** セクションで、出力に次のものが含まれていることを確かめます。
 
-    - **chat_output** (値は `${chat_with_context.output}`)
+    - 値 ${chat_with_context.output} の **chat_output**
 
 1. **[modify_query_with_history]** セクション内で、次の設定を選択します (他の設定はそのまま残します)。
 
-    - **Connection**: `Default_AzureOpenAI`
-    - **Api**: `chat`
-    - **deployment_name**: `gpt-35-turbo-16k`
-    - **response_format**: `{"type":"text"}`
+    - **[接続]**:*AI ハブの既定の Azure OpenAI リソース*
+    - **Api**: chat
+    - **deployment_name**: gpt-35-turbo-16k
+    - **[response_format]**: {"type":"text"}
 
 1. **[検索]** セクションで、次のパラメーター値を設定します。
 
     - **mlindex_content**:*空のフィールドを選択して [生成] ペインを開きます*
         - **index_type**:登録済みのインデックス
         - **mlindex_asset_id**: brochures-index:1
-    - **queries**: `${modify_query_with_history.output}`
-    - **query_type**: `Hybrid (vector + keyword)`
+    - **queries**: ${modify_query_with_history.output}
+    - **query_type**:ハイブリッド (ベクトル + キーワード)
     - **top_k**:2
 
 1. **[generate_prompt_context]** セクション内で、Python スクリプトを確認し、このツールの **[入力]** に次のパラメーターが含まれるようにします。
