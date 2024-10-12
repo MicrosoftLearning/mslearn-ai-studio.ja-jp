@@ -51,13 +51,13 @@ Azure Developer CLI AI プロジェクト テンプレートの使用を開始�
 
 1. 最初に、[最新バージョン](https://github.com/Azure/azure-dev/releases/tag/azure-dev-cli_1.9.3)の Azure Developer CLI がインストールされていることを確認します。
     ```bash
-        azd version
+    azd version
     ```
 
 1. 次に、VS Code ターミナルから Azure アカウントにサインインします。
 
     ```bash
-        azd auth login 
+    azd auth login 
     ```
 
 ## プロジェクト用に Azure リソースをプロビジョニングする
@@ -67,7 +67,7 @@ Azure Developer CLI AI プロジェクト テンプレートの使用を開始�
 1. azd を使用して AI アプリケーションのプロビジョニングと*デプロイ*をします。
 
     ```bash
-        azd up
+    azd up
     ```
 
 1. 次のプロンプトが表示されるはずです。 次のガイダンスを使用して対応してください。
@@ -144,7 +144,7 @@ Azure portal は、プロジェクトの基になる Azure リソースを管理
 1. ここでは、次のテスト**入力**を使用して、Copilot デプロイをテストします。
 
     ```bash
-      {"question": "tell me about your hiking shoes", "customerId": "2", "chat_history": []}
+    {"question": "tell me about your hiking shoes", "customerId": "2", "chat_history": []}
     ```
 
 次に示すような出力コンポーネントで、有効な JSON 応答が得られるはずです。
@@ -193,13 +193,13 @@ Azure portal は、プロジェクトの基になる Azure リソースを管理
 1. 開発環境に **Promptflow ツール**がインストールされていることを確認します。
 
     ```bash
-        pf version
+    pf version
     ```
 
 1. **pf フロー テスト** ツールを使用して、次に挙げたサンプルの質問により、**contoso_chat** フレックス フロー アプリケーションをローカルでテストします。 入力を渡すためのコマンドの構文に注意してください。
 
     ```bash
-        pf flow test --flow ./contoso_chat --inputs question="tell me about your jackets" customerId="3" chat_history=[]
+    pf flow test --flow ./contoso_chat --inputs question="tell me about your jackets" customerId="3" chat_history=[]
     ```
 
 次のような応答が得られるはずです。
@@ -211,7 +211,7 @@ Azure portal は、プロジェクトの基になる Azure リソースを管理
 1. 次に示すように、`--ui` フラグを使用して実行の詳細をトレースできます。
 
     ```bash
-        pf flow test --flow ./contoso_chat --inputs question="tell me about your jackets" customerId="3" chat_history=[] --ui
+    pf flow test --flow ./contoso_chat --inputs question="tell me about your jackets" customerId="3" chat_history=[] --ui
     ```
 
 このコマンドを使用すると、ブラウザー (新しいタブ) で、待機時間やトークンの使用状況など、そのテストの実行に関する高度な詳細を提供するテーブルが表示された**トレース ビュー**が起動されるはずです。
@@ -316,7 +316,7 @@ GitHub Actions を使用してアプリ評価パイプラインを実行する�
 このプロジェクトでは、長期間実行したままにすると大きなコストが発生する可能性があるモデルとサービス (Azure AI 検索など) を使用します。 この Azure AI AZD テンプレートを調べ終わったら、Azure の不要なコストを防ぐために、作成したリソースを削除する必要があります。 VS Code ターミナルで次のコマンドを実行することで、これを行うことができます。
 
 ```bash
-    azd down
+azd down
 ```
 
 この結果、アプリケーションのプロビジョニングとデプロイで行った手順が無効になるだけでなく、リソースを*消去* (そうしなければ、リソースは "論理的な削除" 状態で保持され、リソース名の再利用やモデル クォータの再利用ができなくなる場合があります) する追加の手順も実行されます。 **このコマンドを実行すると、シャットダウン中にこれらのアクションについてプロンプトが表示されるため、正しく応答することを確認してください**。
