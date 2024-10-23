@@ -37,17 +37,18 @@ Azure Developer CLI AI プロジェクト テンプレートの使用を開始�
 
 開発環境を初期化するには、次の手順に従います。
 
-1. **リポジトリのフォーク**: GitHub リポジトリ ページの右上隅にある **[Fork]** (フォーク) ボタンを選択して、GitHub アカウントにリポジトリのコピーを作成します。
+1. **contoso-chat** リポジトリ (`https://github.com/Azure-Samples/contoso-chat`) に移動します。
+1. contoso-chat GitHub リポジトリ ページの右上隅にある **[Fork]** (フォーク) ボタンを選択して、GitHub アカウントにリポジトリのコピーを作成します。
 1. フォークしたリポジトリが作成されたら、**[Code]** (コード) ボタンを選択し、**[Codespaces]** を選択します。
 1. **[+]** ボタンを選択して、フォークされたリポジトリのメイン ブランチに新しい codespace を作成します。
 
     ![GitHub Codespaces を作成する](./media/create_codespaces.png)
 
-1. 数秒後に、既定で[アタッチされた Visual Studio Code エディター](https://code.visualstudio.com/docs/devcontainers/containers)を使用して Codespaces 環境がセットアップされる新しいブラウザー タブにリダイレクトされます。 このブラウザー タブで作業を続けるか、左上のメニューの **[Open in VS Code Desktop]** (VS Code Desktop で開く) ボタンをクリックすることで、ローカルの Visual Studio Code エディターから実行中の Codespaces に再接続することができます。
+1. 数秒後に、既定で[アタッチされた Visual Studio Code エディター](https://code.visualstudio.com/docs/devcontainers/containers)を使用して Codespaces 環境がセットアップされる新しい [ブラウザー] タブにリダイレクトされます。
 
 ## VS Code 環境を Azure に接続する
 
-次の手順では、ローカル開発環境を、プロジェクトをデプロイする Azure サブスクリプションと接続します。 Visual Studio Code IDE で新しいターミナルを開いて開始します。
+次の手順では、開発環境を、プロジェクトをデプロイする Azure サブスクリプションと接続します。 まず、Codespaces で実行されている VS Code 環境で新しいターミナルを開きます。
 
 1. 最初に、[最新バージョン](https://github.com/Azure/azure-dev/releases/tag/azure-dev-cli_1.9.3)の Azure Developer CLI がインストールされていることを確認します。
     ```bash
