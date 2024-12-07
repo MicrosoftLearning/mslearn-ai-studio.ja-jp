@@ -5,7 +5,7 @@ lab:
 
 # コード優先の開発ツールを使用してカスタム Copilot を構築する
 
-この演習では、Azure AI Studio 上の[オンライン エンドポイントに AI プロジェクトをプロビジョニングしてデプロイする](https://learn.microsoft.com/azure/developer/azure-developer-cli/azure-ai-ml-endpoints?WT.mc_id=academic-140829-cacaste) Azure Developer CLI テンプレートを複製してデプロイします。 そして、Azure AI とコード優先エクスペリエンスにより独自のカスタム Copilot を構築するための開始点として使用します。
+この演習では、Azure AI Foundry 上の[オンライン エンドポイントに AI プロジェクトをプロビジョニングしてデプロイする](https://learn.microsoft.com/azure/developer/azure-developer-cli/azure-ai-ml-endpoints?WT.mc_id=academic-140829-cacaste) Azure Developer CLI テンプレートを複製してデプロイします。 そして、Azure AI とコード優先エクスペリエンスにより独自のカスタム Copilot を構築するための開始点として使用します。
 
 この演習には約 **90** 分かかります。
 
@@ -21,7 +21,7 @@ lab:
 
 Azure Developer CLI AI プロジェクト テンプレートの使用を開始するには、「[Azure Developer CLI コレクションを使用した Azure AI テンプレート](https://learn.microsoft.com/collections/5pq0uompdgje8d/?WT.mc_id=academic-140829-cacaste)」に移動します。 コレクションを見て回ることで、マルチモーダル プロジェクトおよびマルチエージェント プロジェクトのサンプル、異なるフレームワークと Azure サービスを統合する Copilot のようなプロジェクトおよびサンプルなど、複数のプロジェクトがテクノロジ別やユース ケース別にグループ化していることがわかります。
 
-この演習では、**[Azure AI Studio と PromptFlow (Python) を使用した Contoso チャット小売 Copilot](https://aka.ms/contoso-retail-sample)** プロジェクト テンプレートを出発点として使用します。 このプロジェクト テンプレートは、Prompty と PromptFlow を使用して、Contoso Outdoors という架空の会社の小売 Web サイト (チャット UI) に統合できるカスタム Copilot (チャット AI) を構築する、コード優先のエクスペリエンスです。
+この演習では、**[Azure AI Foundry と PromptFlow (Python) を使用した Contoso チャット小売 Copilot](https://aka.ms/contoso-retail-sample)** プロジェクト テンプレートを出発点として使用します。 このプロジェクト テンプレートは、Prompty と PromptFlow を使用して、Contoso Outdoors という架空の会社の小売 Web サイト (チャット UI) に統合できるカスタム Copilot (チャット AI) を構築する、コード優先のエクスペリエンスです。
 
 ![Contoso チャット UI/UX](./media/contoso_outdoors_website.png)
 
@@ -83,7 +83,7 @@ Azure Developer CLI AI プロジェクト テンプレートの使用を開始�
 azd を使用した AI アプリケーションのプロビジョニングとデプロイは、完了するまでに 10 分以上かかる可能性があります。 進行状況は次の方法で追跡できます。
 
 - [Azure portal](https://ms.portal.azure.com/) で詳細な進行状況を表示する。 環境名に対応するリソース グループを検索します。 サイドバーで **[デプロイ]** オプションを選択し、作成中のリソースのデプロイ状態を監視します。
-- [Azure AI Studio](https://ai.azure.com) ポータルにアクセスする。 Azure アカウントを使用してサインインします。 上記のリソース グループに対応する AI ハブを検索します (数回更新する必要がある場合があります)。 一覧表示されている AI プロジェクトを選択し、サイドバーで **[デプロイ]** を選択して、モデルとチャット アプリケーションのデプロイの状態を追跡します。
+- [Azure AI Foundry ポータル](https://ai.azure.com)にアクセスします。 Azure アカウントを使用してサインインします。 上記のリソース グループに対応する AI ハブを検索します (数回更新する必要がある場合があります)。 一覧表示されている AI プロジェクトを選択し、サイドバーで **[デプロイ]** を選択して、モデルとチャット アプリケーションのデプロイの状態を追跡します。
 
 Azure portal を使用してリソースのプロビジョニングを検証する方法を見てみましょう。
 
@@ -92,13 +92,13 @@ Azure portal を使用してリソースのプロビジョニングを検証す�
 
     ![Azure portal のリソース グループの概要](./media/azure-portal-resource-group.png)
 
-1. まず、主要な [Azure AI Studio アーキテクチャ](https://learn.microsoft.com/azure/ai-studio/concepts/architecture) リソースが作成されたことを確認します。 次の図は、これらの各リソースが AI アプリケーションに提供するものの詳細を示しています。
+1. まず、主要な [Azure AI Foundry アーキテクチャ](https://learn.microsoft.com/azure/ai-studio/concepts/architecture) リソースが作成されたことを確認します。 次の図は、これらの各リソースが AI アプリケーションに提供するものの詳細を示しています。
 
     - **Azure AI ハブ**: 最上位レベルの Azure リソース。 チームのコラボレーション環境を提供します。
     - **Azure AI プロジェクト**: ハブの子。 オーケストレーション、カスタマイズ用のアプリ コンポーネントをグループ化します。
     - **Azure AI サービス**: モデル エンドポイントを管理します。
 
-    ![Azure AI Studio のアーキテクチャ](./media/resource-provider-connected-resources.svg)
+    ![Azure AI Foundry アーキテクチャ](./media/resource-provider-connected-resources.svg)
 
 1. 次に、クエリ駆動型の取得用に製品と顧客のデータを格納することで[取得拡張生成](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation)設計パターンを実装するための、2 つの主要なリソースがプロビジョニングされたことを確認します。
 
@@ -115,11 +115,11 @@ Azure portal を使用してリソースのプロビジョニングを検証す�
 
 1. 最後になりましたが、**Machine Learning オンライン デプロイ**という種類の新しいリソースが登場します。 これは、デプロイされた Azure AI プロジェクト エンドポイント (チャット Copilot 用) に対応するリソースです。
 
-## Azure AI Studio を使用してデプロイを検証する
+## Azure AI Foundry を使用してデプロイを検証する
 
-Azure portal は、プロジェクトの基になる Azure リソースを管理するのに役立ちます。 Azure AI Studio ポータルを使用すると、モデルの選択からアプリケーションのデプロイまで、AI プロジェクト自体をエンドツーエンドで*構築および管理*することができます。 `azd up` コマンドは、必要なモデルのプロビジョニングから、使用のための Copilot API エンドポイントのデプロイおよびホストまで、プロセス全体を完了している必要があります。 アプリケーションが期待どおりに機能していることを確認しましょう。
+Azure portal は、プロジェクトの基になる Azure リソースを管理するのに役立ちます。 Azure AI Foundry ポータルを使用すると、モデルの選択からアプリケーションのデプロイまで、AI プロジェクト自体をエンドツーエンドで*構築および管理*することができます。 `azd up` コマンドは、必要なモデルのプロビジョニングから、使用のための Copilot API エンドポイントのデプロイおよびホストまで、プロセス全体を完了している必要があります。 アプリケーションが期待どおりに機能していることを確認しましょう。
 
-1. [Azure AI Studio](https://ai.azure.com/manage) の **[管理]** ページにアクセスして、サブスクリプション内のすべての Azure AI ハブを表示します。
+1. [Azure AI Foundry ポータル](https://ai.azure.com/manage)の **[管理]** ページにアクセスして、サブスクリプション内のすべての Azure AI ハブを表示します。
 1. リソース グループのハブを選択して、その中のすべての Azure AI プロジェクトを表示します。
 1. ハブで既定の AI プロジェクトを選択し、左側のメニューで **[デプロイ]** を選択します。
 1. **[モデル デプロイ]** で、次のデプロイを含む Azure OpenAI 接続があることを確認します。
@@ -131,13 +131,13 @@ Azure portal は、プロジェクトの基になる Azure リソースを管理
 
     ![Azure AI プロジェクトのデプロイ](./media/azure-ai-project-deployment.png)
 
-## Azure AI Studio を使用して (クラウド内の) デプロイをテストする
+## Azure AI Foundry を使用して (クラウド内の) デプロイをテストする
 
-デプロイされた Copilot が機能することを検証するには、Azure AI Studio の組み込みのテスト プレイグラウンド機能を使用します。
+デプロイされた Copilot が機能することを検証するには、Azure AI Foundry ポータルの組み込みのテスト プレイグラウンド機能を使用します。
 
 ![チャット デプロイの詳細](./media/chat-deployment-details.png)
 
-1. Azure AI Studio の **[アプリのデプロイ]** 一覧から、**[chat-deployment-xxxx]** というデプロイを選択します。
+1. Azure AI Foundry ポータルの **[アプリのデプロイ]** 一覧から、**[chat-deployment-xxxx]** というデプロイを選択します。
 1. デプロイされたチャット アプリケーションの **[詳細]** ページで、**[テスト]** タブを選択してテスト インターフェイスを取得します。
 
     **[詳細]** タブには、他のフロントエンド アプリケーション (Contoso Outdoor Web サイトなど) でこのチャット アシスタントを実際のユーザー操作に統合するのに使用できる、`Target URI` 値と `Key` 値もあります。
