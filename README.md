@@ -1,6 +1,6 @@
-# Azure AI Studio の演習
+# Azure AI FoundryExercises
 
-このリポジトリには、[Azure AI Studio に関する Microsoft Learn モジュール](https://docs.microsoft.com/training)での実践的な演習をサポートするための手順とアセットが含まれています。
+このリポジトリには、[Azure AI Foundry ポータルに関する Microsoft Learn モジュール](https://learn.microsoft.com/en-us/training/paths/create-custom-copilots-ai-studio/)での実践的な演習をサポートするための手順とアセットが含まれています。
 
 ## 問題の報告
 
