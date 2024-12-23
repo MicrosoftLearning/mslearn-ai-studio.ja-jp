@@ -4,7 +4,7 @@ permalink: index.html
 layout: home
 ---
 
-# Azure AI Studio を使用して生成 AI アプリケーションを開発する
+# Azure AI Foundry ポータルで生成 AI アプリを開発する
 
 次の演習は、開発者がチャットベースの "Copilot" などの生成 AI アプリケーションを構築するのに使用する一般的なパターンと手法を探索し、Azure AI サービス (特に Azure OpenAI Service と Azure AI Studio) を使用してこれらのパターンを実装する方法を学習する、実践的な学習エクスペリエンスが得られるように設計されています。
 
