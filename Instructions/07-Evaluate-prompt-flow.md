@@ -141,6 +141,9 @@ lab:
     - **[次へ]** を選択します
     - **[評価するデータを選択する]**:データセットの追加
         - `https://raw.githubusercontent.com/MicrosoftLearning/mslearn-ai-studio/main/data/travel-qa.jsonl` で[検証データセット](https://raw.githubusercontent.com/MicrosoftLearning/mslearn-ai-studio/main/data/travel-qa.jsonl)をダウンロードし、JSONL ファイルとして保存して UI にアップロードします。
+
+    > **注**: デバイスにおいて、デフォルトでファイルを .txt ファイルとして保存するようになっている場合があります。 すべてのファイルを選択し、.txt サフィックスを削除して、ファイルが JSONL として保存されるようにしてください。
+
     - **[次へ]** を選択します
     - **[メトリックの選択]**:コヒーレンス、流暢性
     - **[接続]**:AI サービス接続**
