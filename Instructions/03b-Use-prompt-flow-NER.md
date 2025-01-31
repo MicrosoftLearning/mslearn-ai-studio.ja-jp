@@ -124,8 +124,10 @@ lab:
 
    user:
    
+   {% raw %}
    Entity type: {{entity_type}}
    Text content: {{text}}
+   {% endraw %}
    Entities:
    ```
 
