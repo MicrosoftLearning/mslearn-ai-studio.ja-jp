@@ -24,18 +24,11 @@ lab:
     - **[ハブ名]**: *一意の名前 - たとえば `my-ai-hub`*
     - **[サブスクリプション]**:"*ご自身の Azure サブスクリプション*"
     - **[リソース グループ]**: *一意の名前 (たとえば、`my-ai-resources`) で新しいリソース グループを作成するか、既存のものを選びます*
-    - **[場所]**: 次の一覧からランダム リージョンを選択します\*
-        - 米国東部
-        - 米国東部 2
-        - 米国中北部
-        - 米国中南部
-        - スウェーデン中部
-        - 米国西部
-        - 米国西部 3
+    - **場所**: **[選択に関するヘルプ]** を選択し、次に [場所ヘルパー] ウィンドウで **gpt-4** を選択し、推奨されるリージョンを選択します\*
     - **Azure AI サービスまたは Azure OpenAI の接続**: *適切な名前 (たとえば、`my-ai-services`) を使用して新しい AI サービス リソースを作成するか、既存のものを使用します*
     - **Azure AI 検索への接続**:接続をスキップする
 
-    > \* モデルのクォータは、リージョンのクォータによってテナント レベルで制限されます。 ランダム リージョンを選択すると、複数のユーザーが同じテナントで作業しているときに、クォータの可用性を均等配置できます。 演習の後半でクォータ制限に達した場合は、別のリージョンに別のリソースを作成する必要が生じる可能性があります。
+    > \* Azure OpenAI リソースは、リージョンのクォータによってテナント レベルで制限されます。 演習の後半でクォータ制限に達した場合は、別のリージョンに別のリソースを作成する必要が生じる可能性があります。
 
 1. **[次へ]** を選択し、構成を確認します。 **[作成]** を選択し、プロセスが完了するまで待ちます。
 1. プロジェクトが作成されたら、表示されているヒントをすべて閉じて、Azure AI Foundry ポータルのプロジェクト ページを確認します。これは次の画像のようになっているはずです。
@@ -60,7 +53,9 @@ lab:
 
 これでモデルをデプロイしたので、Azure AI Foundry SDK を使用して、モデルとチャットするアプリケーションを開発できます。
 
-### アプリケーション構成を準備する
+> **ヒント**: Python または Microsoft C# を使用してソリューションを開発することを選択できます。 選択した言語の適切なセクションの指示に従います。
+
+### アプリケーション リポジトリを複製する
 
 1. Azure AI Foundry ポータルで、プロジェクトの **[概要]** ページを表示します。
 1. **[プロジェクトの詳細]** エリアで、**[プロジェクト接続文字列]** の内容を書き留めます。 この接続文字列を使用して、クライアント アプリケーションでプロジェクトに接続します。
@@ -71,6 +66,8 @@ lab:
 
 1. Cloud Shell ツール バーの **[設定]** メニューで、**[クラシック バージョンに移動]** を選択します (これはコード エディターを使用するのに必要です)。
 
+    > **ヒント**: Cloudshell にコマンドを貼り付けると、出力が大量のスクリーン バッファーを占有する可能性があります。 `cls` コマンドを入力して、各タスクに集中しやすくすることで、スクリーンをクリアできます。
+
 1. PowerShell ペインで、次のコマンドを入力して、この演習用の GitHub リポジトリを複製します。
 
     ```
@@ -78,26 +75,53 @@ lab:
     git clone https://github.com/microsoftlearning/mslearn-ai-studio mslearn-ai-foundry
     ```
 
-1. リポジトリが複製されたら、チャット アプリケーションのコード ファイルを含んだフォルダーに移動します。
+### アプリケーション構成を準備する
+
+> **注**: 選択したプログラミング言語の手順に従います。
+
+1. リポジトリが複製されたら、チャット アプリケーションのコード ファイルを含んだフォルダーに移動します。  
+
+    **Python**
 
     ```
-    cd mslearn-ai-foundry/labfiles/chat-app/python
+   cd mslearn-ai-foundry/labfiles/chat-app/python
     ```
 
-1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、これから使用する Python ライブラリをインストールします。
-    - **python-dotenv** : アプリケーション構成ファイルから設定を読み込む際に使用されます。
-    - **azure-identity**: Entra ID 資格情報での認証に使用されます。
-    - **azure-ai-projects**: Azure AI Foundry プロジェクトの操作に使用されます。
-    - **azure-ai-inference**: 生成 AI モデルとのチャットに使用されます。
+    **C#**
+
+    ```
+   cd mslearn-ai-foundry/labfiles/chat-app/c-sharp
+    ```
+
+1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、これから使用するライブラリをインストールします。
+
+    **Python**
 
     ```
    pip install python-dotenv azure-identity azure-ai-projects azure-ai-inference
     ```
 
-1. 次のコマンドを入力して、提供されている **.env** Python 構成ファイルを編集します。
+    **C#**
+
+    ```
+   dotnet add package Azure.AI.Inference
+   dotnet add package Azure.AI.Projects --prerelease
+   dotnet add package Azure.Identity
+    ```
+    
+
+1. 次のコマンドを入力して、提供されている構成ファイルを編集します。
+
+    **Python**
 
     ```
    code .env
+    ```
+
+    **C#**
+
+    ```
+   code appsettings.json
     ```
 
     このファイルをコード エディターで開きます。
@@ -107,37 +131,75 @@ lab:
 
 ### プロジェクトに接続してモデルとチャットするためのコードを記述する
 
-> **ヒント**: Python コード ファイルにコードを追加する際は、必ず正しいインデントを維持してください。
+> **ヒント**: コードを追加する際は、必ず正しいインデントを維持してください。
 
-1. 次のコマンドを入力して、提供されている **chat-app.py** Python コード ファイルを編集します。
+1. 次のコマンドを入力して、提供されているコード ファイルを編集します。
+
+    **Python**
 
     ```
    code chat-app.py
     ```
 
-1. コード ファイルで、ファイルの先頭に追加された既存の **import** ステートメントを書き留めます。 次に、コメント **# AI プロジェクトのリファレンスの追加**で、次のコードを追加して、Azure AI プロジェクト ライブラリを参照します。
+    **C#**
 
-    ```python
+    ```
+   code Program.cs
+    ```
+
+1. コード ファイルで、ファイルの先頭に追加された既存のステートメントを書き留めて、必要な SDK 名前空間をインポートします。 次に、コメント**参照の追加**の下に、次のコードを追加して、前にインストールしたライブラリの名前空間を参照します。
+
+    **Python**
+
+    ```
+   from dotenv import load_dotenv
+   from azure.identity import DefaultAzureCredential
    from azure.ai.projects import AIProjectClient
     ```
 
-1. **main** 関数のコメント **# 構成設定の取得**で、**.env** ファイルで定義したプロジェクト接続文字列とモデル デプロイ名の値がコードで読み込まれることに注意してください。
-1. コメント **# プロジェクト クライアントの初期化**で、次のコードを追加して、現在のサインインに使用した Azure 資格情報で Azure AI Foundry プロジェクトに接続します。
+    **C#**
 
-    ```python
-   project = AIProjectClient.from_connection_string(
+    ```
+   using Azure.Identity;
+   using Azure.AI.Projects;
+   using Azure.AI.Inference;
+    ```
+
+1. **main** 関数のコメント**構成設定の取得**で、構成ファイルで定義したプロジェクト接続文字列とモデル デプロイ名の値がコードで読み込まれることに注意してください。
+1. コメント**プロジェクト クライアントの初期化**で、次のコードを追加して、現在のサインインに使用した Azure 資格情報で Azure AI Foundry プロジェクトに接続します。
+
+    **Python**
+
+    ```
+   projectClient = AIProjectClient.from_connection_string(
         conn_str=project_connection,
-        credential=DefaultAzureCredential()
-        )
-    ```
-    
-1. コメント **# チャット クライアントの取得**で、次のコードを追加して、モデルとチャットするためのクライアント オブジェクトを作成します。
-
-    ```python
-   chat = project.inference.get_chat_completions_client()
+        credential=DefaultAzureCredential())
     ```
 
-1. コードには、ユーザーが「quit」と入力するまでプロンプトを入力できるようにするループが含まれていることに注意してください。 次に、ループ セクションのコメント **# チャットの完了の取得**で、次のコードを追加して、プロンプトを送信し、モデルから完了を取得します。
+    **C#**
+
+    ```
+   var projectClient = new AIProjectClient(project_connection,
+                        new DefaultAzureCredential());
+    ```
+
+1. コメント**チャット クライアントの取得**で、次のコードを追加して、モデルとチャットするためのクライアント オブジェクトを作成します。
+
+    **Python**
+
+    ```
+   chat = projectClient.inference.get_chat_completions_client()
+    ```
+
+    **C#**
+
+    ```
+   ChatCompletionsClient chat = projectClient.GetChatCompletionsClient();
+    ```
+
+1. コードには、ユーザーが「quit」と入力するまでプロンプトを入力できるようにするループが含まれていることに注意してください。 次に、ループ セクションのコメント**チャット完了の取得**で、次のコードを追加して、プロンプトを送信し、モデルから完了を取得します。
+
+    **Python**
 
     ```python
    response = chat.complete(
@@ -150,14 +212,39 @@ lab:
    print(response.choices[0].message.content)
     ```
 
+    **C#**
+
+    ```
+   var requestOptions = new ChatCompletionsOptions()
+   {
+       Model = model_deployment,
+       Messages =
+           {
+               new ChatRequestSystemMessage("You are a helpful AI assistant that answers questions."),
+               new ChatRequestUserMessage(input_text),
+           }
+   };
+    
+   Response<ChatCompletions> response = chat.Complete(requestOptions);
+   Console.WriteLine(response.Value.Content);
+    ```
+
 1. **Ctrl + S** キー コマンドを使用してコード ファイルに変更を保存してから、**Ctrl + Q** キー コマンドを使用して、Cloud Shell コマンド ラインを開いたままコード エディターを閉じます。
 
 ### チャット アプリケーションを実行する
 
-1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して Python コードを実行します。
+1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力してアプリを実行します。
+
+    **Python**
 
     ```
    python chat-app.py
+    ```
+
+    **C#**
+
+    ```
+   dotnet run
     ```
 
 1. メッセージが表示されたら、`What is the fastest animal on Earth?` などの質問を入力し、生成 AI モデルからの応答を確認します。
