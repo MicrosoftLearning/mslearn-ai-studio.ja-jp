@@ -1,5 +1,5 @@
 ---
-title: Azure OpenAI 演習
+title: 生成 AI ソリューションを開発する
 permalink: index.html
 layout: home
 ---
