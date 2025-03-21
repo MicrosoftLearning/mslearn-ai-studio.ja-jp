@@ -1,9 +1,3 @@
----
-lab:
-  title: コード優先の開発ツールを使用して生成 AI アプリを構築する
-  description: コードを使用して生成 AI アプリの要素を作成および更新して、DevOps シナリオでの自動ビルドおよびデプロイをサポートする方法について説明します。
----
-
 # コード優先の開発ツールを使用して生成 AI アプリを構築する
 
 この演習では、Azure AI Foundry 上の[オンライン エンドポイントに AI プロジェクトをプロビジョニングしてデプロイする](https://learn.microsoft.com/azure/developer/azure-developer-cli/azure-ai-ml-endpoints?WT.mc_id=academic-140829-cacaste) Azure Developer CLI テンプレートを複製してデプロイします。 そして、Azure AI とコード優先エクスペリエンスにより独自のカスタム Copilot を構築するための開始点として使用します。
