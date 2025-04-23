@@ -10,7 +10,7 @@ lab:
 
 この演習は約 **30** 分かかります。
 
-> **注**: この演習は、変更される可能性があるプレリリース SDK に基づいています。 必要に応じて、特定のバージョンのパッケージを使用しました。利用可能な最新バージョンが反映されていない可能性があります。
+> **注**: この演習は、変更される可能性があるプレリリース SDK に基づいています。 必要に応じて、特定のバージョンのパッケージを使用しました。利用可能な最新バージョンが反映されていない可能性があります。 予期しない動作、警告、またはエラーが発生する場合があります。
 
 ## Azure AI Foundry プロジェクトを作成する
 
@@ -53,7 +53,7 @@ lab:
 3. **[モデル + エンドポイント]** ページの **[モデル デプロイ]** タブの **[+ モデルのデプロイ]** メニューで、**[基本モデルのデプロイ]** を選択します。
 4. 一覧で **Phi-4-multimodal-instruct** モデルを検索してから、それを選択して確認します。
 5. メッセージに応じて使用許諾契約書に同意したあと、デプロイの詳細で **[カスタマイズ]** を選択して、以下の設定でモデルをデプロイします。
-    - **デプロイ名**: モデル デプロイの有効な名前**
+    - **デプロイ名**: *モデル デプロイの有効な名前*
     - **デプロイの種類**: グローバル標準
     - **デプロイの詳細**: *既定の設定を使用します*
 6. デプロイのプロビジョニングの状態が**完了**になるまで待ちます。
@@ -82,7 +82,7 @@ lab:
 
     **<font color="red">続行する前に、クラシック バージョンの Cloud Shell に切り替えたことを確認します。</font>**
 
-1. Cloud Shell 画面で、次のコマンドを入力して、この演習のコード ファイルを含む GitHub リポジトリを複製します (コマンドを入力するか、クリップボードにコピーしてから、コマンド ラインで右クリックし、プレーンテキストとして貼り付けます)。
+1. Cloud Shell 画面で、次のコマンドを入力して、この演習のコード ファイルを含む GitHub リポジトリをクローンします (コマンドを入力するか、クリップボードにコピーしてから、コマンド ラインで右クリックし、プレーンテキストとして貼り付けます)。
 
     ```
     rm -r mslearn-ai-foundry -f
@@ -105,7 +105,7 @@ lab:
    cd mslearn-ai-foundry/labfiles/multimodal/c-sharp
     ```
 
-8. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、これから使用するライブラリをインストールします。
+8. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、使用するライブラリをインストールします。
 
     **Python**
 
@@ -140,7 +140,7 @@ lab:
     このファイルをコード エディターで開きます。
 
 10. コード ファイルで、**your_project_connection_string** プレースホルダーをプロジェクトの接続文字列 (Azure AI Foundry ポータルでプロジェクトの **[概要]** ページからコピーしたもの) に置き換え、**your_model_deployment** プレースホルダーを Phi-4-multimodal-instruct モデル デプロイに割り当てた名前に置き換えます。
-11. プレースホルダーを置き換えたら、コード エディター内で、**Ctrl + S** コマンドを使用するか、**右クリックして保存**で変更を保存してから、**Ctrl + Q** コマンドを使用するか、**右クリックして終了**で、Cloud Shell コマンド ラインを開いたままコード エディターを閉じます。
+11. プレースホルダーを置き換えたら、コード エディター内で、**Ctrl + S** コマンドまたは**右クリック メニューの [保存]** を使用して変更を保存し、**Ctrl + Q** コマンドまたは**右クリック メニューの [終了]** を使用して Cloud Shell コマンド ラインを開いたままコード エディターを閉じます。
 
 ### プロジェクトに接続してモデルのためにチャット クライアントを取得するためのコードを記述する
 
@@ -164,7 +164,8 @@ lab:
 
     **Python**
 
-    ```
+    ```python
+   # Add references
    from dotenv import load_dotenv
    from azure.identity import DefaultAzureCredential
    from azure.ai.projects import AIProjectClient
@@ -182,18 +183,20 @@ lab:
 
     **C#**
 
-    ```
+    ```csharp
+   // Add references
    using Azure.Identity;
    using Azure.AI.Projects;
    using Azure.AI.Inference;
     ```
 
 3. **main** 関数のコメント**構成設定の取得**で、構成ファイルで定義したプロジェクト接続文字列とモデル デプロイ名の値がコードで読み込まれることに注意してください。
-4. コメント**プロジェクト クライアントの初期化**で、次のコードを追加して、現在のサインインに使用した Azure 資格情報で Azure AI Foundry プロジェクトに接続します。
+4. **"Initialize the project client"** というコメントの下に次のコードを追加して、現在のサインインに使用した Azure 資格情報で Azure AI Foundry プロジェクトに接続します。
 
     **Python**
 
-    ```
+    ```python
+   # Get configuration settings
    project_client = AIProjectClient.from_connection_string(
         conn_str=project_connection,
         credential=DefaultAzureCredential())
@@ -201,7 +204,8 @@ lab:
 
     **C#**
 
-    ```
+    ```csharp
+   // Get configuration settings
    var projectClient = new AIProjectClient(project_connection,
                         new DefaultAzureCredential());
     ```
@@ -210,13 +214,15 @@ lab:
 
     **Python**
 
-    ```
+    ```python
+   # Get a chat client
    chat_client = project_client.inference.get_chat_completions_client(model=model_deployment)
     ```
 
     **C#**
 
-    ```
+    ```csharp
+   // Get a chat client
    ChatCompletionsClient chat = projectClient.GetChatCompletionsClient();
     ```
 
@@ -228,6 +234,7 @@ lab:
     **Python**
 
     ```python
+   # Get a response to text input
    response = chat_client.complete(
        messages=[
            SystemMessage(system_message),
@@ -238,7 +245,8 @@ lab:
 
     **C#**
 
-    ```
+    ```csharp
+   // Get a response to text input
    var requestOptions = new ChatCompletionsOptions()
    {
    Model = model_deployment,
@@ -281,6 +289,7 @@ lab:
     **Python**
 
     ```python
+   # Get a response to image input
    image_url = "https://github.com/microsoftlearning/mslearn-ai-studio/raw/refs/heads/main/labfiles/multimodal/orange.jpg"
    image_format = "jpeg"
    request = Request(image_url, headers={"User-Agent": "Mozilla/5.0"})
@@ -302,7 +311,8 @@ lab:
     **C#**
 
     ```csharp
-  string imageUrl = "https://github.com/microsoftlearning/mslearn-ai-studio/raw/refs/heads/main/labfiles/multimodal/orange.jpg";
+  // Get a response to image input
+   string imageUrl = "https://github.com/microsoftlearning/mslearn-ai-studio/raw/refs/heads/main/labfiles/multimodal/orange.jpg";
    ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
    {
        Messages = {
@@ -346,6 +356,7 @@ lab:
     **Python**
 
     ```python
+   # Get a response to audio input
    file_path="https://github.com/microsoftlearning/mslearn-ai-studio/raw/refs/heads/main/labfiles/multimodal/manzanas.mp3"
    response = chat_client.complete(
            messages=[
@@ -367,6 +378,7 @@ lab:
     **C#**
 
     ```csharp
+   // Get a response to audio input
    string audioUrl="https://github.com/microsoftlearning/mslearn-ai-studio/raw/refs/heads/main/labfiles/multimodal/manzanas.mp3";
    var requestOptions = new ChatCompletionsOptions()
    {
@@ -382,7 +394,6 @@ lab:
    var response = chat.Complete(requestOptions);
    Console.WriteLine(response.Value.Content);
     ```
-
 
 2. **CTRL + S** コマンドを使用して、変更をコード ファイルに保存します。 必要に応じて、コード エディターを閉じる (**CTRL + Q**) こともできます。
 
