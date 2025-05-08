@@ -1,10 +1,8 @@
 ---
-title: 生成 AI ソリューションを開発する
+title: Azure で生成 AI ソリューションを開発する
 permalink: index.html
 layout: home
 ---
-
-# Azure で生成 AI ソリューションを開発する
 
 次の演習は、Microsoft Azure で生成 AI ソリューションを構築するときに開発者が行う一般的なタスクについて調べる、実践的な学習エクスペリエンスを提供するように設計されています。
 
