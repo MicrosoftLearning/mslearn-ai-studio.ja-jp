@@ -66,31 +66,17 @@ lab:
 
 テスト データに基づいて、モデルの応答を手動で確認できます。 手作業で確認すると、さまざまな入力をテストして、モデルが期待どおりのパフォーマンスを見せるどうかを評価できます。
 
-1. 新しいブラウザー タブで、`https://raw.githubusercontent.com/MicrosoftLearning/mslearn-ai-studio/refs/heads/main/data/travel_evaluation_data.csv`から [travel_evaluation_data.csv](https://raw.githubusercontent.com/MicrosoftLearning/mslearn-ai-studio/refs/heads/main/data/travel_evaluation_data.csv) をダウンロードし、ローカル フォルダーに保存します。
+1. 新しいブラウザー タブで、`https://raw.githubusercontent.com/MicrosoftLearning/mslearn-ai-studio/refs/heads/main/data/travel_evaluation_data.jsonl` から [travel_evaluation_data.jsonl](https://raw.githubusercontent.com/MicrosoftLearning/mslearn-ai-studio/refs/heads/main/data/travel_evaluation_data.jsonl) をダウンロードし、ローカル フォルダーに **travel_evaluation_data.jsonl** として保存します (.txt ファイルではなく、必ず .jsonl ファイルとして保存してください)。
 1. [Azure AI Foundry ポータル] タブに戻り、ナビゲーション ウィンドウの **[評価と改善]** セクションで、**[評価]** を選択します。
 1. **[評価]** ページで、**[手作業評価]** タブを表示し、**[+ 新しい手作業評価]** を選択します。
+1. **[構成]** セクションの **[モデル]** の一覧で、**GPT-4o-mini** モデル デプロイを選択します。
 1. AI 旅行アシスタント用に**システム メッセージ**を次の指示に変更します。
 
    ```
-   Objective: Assist users with travel-related inquiries, offering tips, advice, and recommendations as a knowledgeable travel agent.
-
-   Capabilities:
-   - Provide up-to-date travel information, including destinations, accommodations, transportation, and local attractions.
-   - Offer personalized travel suggestions based on user preferences, budget, and travel dates.
-   - Share tips on packing, safety, and navigating travel disruptions.
-   - Help with itinerary planning, including optimal routes and must-see landmarks.
-   - Answer common travel questions and provide solutions to potential travel issues.
-    
-   Instructions:
-   1. Engage with the user in a friendly and professional manner, as a travel agent would.
-   2. Use available resources to provide accurate and relevant travel information.
-   3. Tailor responses to the user's specific travel needs and interests.
-   4. Ensure recommendations are practical and consider the user's safety and comfort.
-   5. Encourage the user to ask follow-up questions for further assistance.
+   Assist users with travel-related inquiries, offering tips, advice, and recommendations as a knowledgeable travel agent.
    ```
 
-1. **[構成]** セクションの **[モデル]** の一覧で、**GPT-4o-mini** モデル デプロイを選択します。
-1. **[手作業評価結果]** セクションで、**[テスト データのインポート]** を選択し、以前にダウンロードした **travel_evaluation_data.csv** ファイルをアップロードして、データセット フィールドを次のようにマッピングします。
+1. **[手動評価の結果]** セクションで、**[テスト データのインポート]** を選択し、以前にダウンロードした **travel_evaluation_data.jsonl** ファイルをアップロードして、データセット フィールドを次のようにマップします。
     - **入力**: 質問
     - **期待される応答**: ExpectedResponse
 1. テスト ファイル内の質問と期待される回答を確認します。これらを使用して、モデルが生成する応答を評価します。
@@ -114,24 +100,10 @@ lab:
 1. **システム メッセージ**を以前にAI 旅行アシスタント用に使用したのと同じ指示に変更します。
 
    ```
-   Objective: Assist users with travel-related inquiries, offering tips, advice, and recommendations as a knowledgeable travel agent.
-
-   Capabilities:
-   - Provide up-to-date travel information, including destinations, accommodations, transportation, and local attractions.
-   - Offer personalized travel suggestions based on user preferences, budget, and travel dates.
-   - Share tips on packing, safety, and navigating travel disruptions.
-   - Help with itinerary planning, including optimal routes and must-see landmarks.
-   - Answer common travel questions and provide solutions to potential travel issues.
-    
-   Instructions:
-   1. Engage with the user in a friendly and professional manner, as a travel agent would.
-   2. Use available resources to provide accurate and relevant travel information.
-   3. Tailor responses to the user's specific travel needs and interests.
-   4. Ensure recommendations are practical and consider the user's safety and comfort.
-   5. Encourage the user to ask follow-up questions for further assistance.
+   Assist users with travel-related inquiries, offering tips, advice, and recommendations as a knowledgeable travel agent.
    ```
 
-1. **[テスト データの構成]** セクションでは、GPT モデルを使用してテスト データを生成したり、(その後、自分の期待どおりになるように編集や補足をしたり）、既存のデータセットを使用したり、ファイルをアップロードしたりできることに注意してください。 この演習では、**[既存のデータセットの使用]** を選択してから、**travel_evaluation_data_csv_*xxxx...*** データセット (以前に.csv ファイルをアップロードしたときに作成されたもの) を選択します。
+1. **[テスト データの構成]** セクションでは、GPT モデルを使用してテスト データを生成したり、(その後、自分の期待どおりになるように編集や補足をしたり）、既存のデータセットを使用したり、ファイルをアップロードしたりできることに注意してください。 この演習では、**[既存のデータセットを使用する]** を選択し、**travel_evaluation_data_jsonl_*xxxx...*** データセット (以前に .jsonl ファイルをアップロードしたときに作成されたもの) を選択します。
 1. データセットのサンプル行を確認してから、**[データ列の選択]** セクションで、次の列マッピングを選択します。
     - **クエリ**: 質問
     - **コンテキスト**: *ここは空白にします。これは、コンテキスト データ ソースをモデルに関連付けるときに、"根拠" を評価するために使用されます。*
@@ -140,7 +112,7 @@ lab:
     - AI 品質 (AI 支援)
     - リスクと安全性 (AI 支援)
     - AI 品質 (NLP)
-1. **モデル デプロイをジャッジとして選択**一覧で、**GPT-4o** モデルを選択します。 このモデルは、***GPT-4o-mini** モデルからの応答を、言語関連の品質と標準的な生成 AI 比較メトリックについて評価するために使用されます。
+1. **モデル デプロイをジャッジとして選択**一覧で、**GPT-4o** モデルを選択します。 このモデルは、**gpt-4o-mini** モデルからの応答を、言語関連の品質と標準的な生成 AI 比較メトリックについて評価するのに使用します。
 1. **[作成]** を選択して、評価プロセスを開始し、それが完了するまで待ちます。 これには数分かかることがあります。
 
     > **ヒント**: プロジェクトのアクセス許可が設定されていることを示すエラーが表示される場合は、少し待ってから、**[作成]** をもう一度選択します。 新しく作成されたプロジェクトのリソースのアクセス許可が反映されるまでに時間がかかる場合があります。
