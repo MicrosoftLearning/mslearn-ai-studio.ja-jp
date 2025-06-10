@@ -14,22 +14,24 @@ lab:
 
 > **注**: この演習はプレリリース サービスに基づいていますが、このサービスは変更される可能性があります。
 
-## Azure AI Foundry リソースを作成する
+## Azure AI Foundry ハブとプロジェクトを作成する
 
-Azure AI Foundry リソースの作成から始めましょう。
+この演習で使用する Azure AI Foundry の機能には、Azure AI Foundry *ハブ* リソースに基づくプロジェクトが必要です。
 
-1. Web ブラウザー内で [Azure portal](https://portal.azure.com) (`https://portal.azure`) を開き、ご自身の Azure 資格情報を使用してサインインします。 初めてサインインしたときに開かれたヒントまたはクイック スタート ペインを閉じます。
-1. 次の設定で新しい `Azure AI Foundry` リソースを作成します。
+1. Web ブラウザーで [Azure AI Foundry ポータル](https://ai.azure.com) (`https://ai.azure.com`) を開き、Azure 資格情報を使用してサインインします。 初めてサインインするときに開いたヒントまたはクイック スタート ウィンドウを閉じます。また、必要に応じて左上にある **Azure AI Foundry** ロゴを使用してホーム ページに移動します。それは次の画像のようになります (**[ヘルプ]** ウィンドウが開いている場合は閉じます)。
+
+    ![Azure AI Foundry ポータルのスクリーンショット。](./media/ai-foundry-home.png)
+
+1. ブラウザーで `https://ai.azure.com/managementCenter/allResources` に移動し、**[作成]** を選択します。 次に、新しい **AI ハブ リソース**を作成するオプションを選択します。
+1. **[プロジェクトの作成]** ウィザードで、プロジェクトの有効な名前を入力します。既存のハブが推奨される場合は、新しいハブを作成するオプションを選択し、**[詳細オプション]** を展開してプロジェクトの以下の設定を指定します。
     - **[サブスクリプション]**:"*ご自身の Azure サブスクリプション*"
     - **リソース グループ**: *リソース グループを作成または選択します*
-    - **名前**: *Azure AI Foundry リソースの有効な名前*
-    - **リージョン**: 次のいずれかのリージョンを選択します。
-        - 米国東部 2
-        - スウェーデン中部
-    - **既定のプロジェクト名**: *プロジェクトの有効な名前*
+    - **ハブ名**: ハブの有効な名前
+    - **場所**: 米国東部 2 またはスウェーデン中部\*
 
-1. リソースが作成されるのを待ち、Azure portal 内のそのページに移動します。
-1. 使用する Azure AI Foundry リソースのページで、**[Go to Azure AI Foundry portal]** を選択します。
+    > \* 一部の Azure AI リソースは、リージョンのモデル クォータによって制限されます。 演習の後半でクォータ制限を超えた場合は、別のリージョンに別のリソースを作成する必要が生じる可能性があります。
+
+1. プロジェクトが作成されるまで待ちます。
 
 ## モデルをデプロイする
 
@@ -59,40 +61,47 @@ Azure AI Foundry リソースの作成から始めましょう。
 ご利用のアプリのデータは、架空の旅行代理店 *Margie's Travel* の旅行パンフレット (PDF 形式) のセットで構成されています。 それらをプロジェクトに追加しましょう。
 
 1. 新しいブラウザー タブで、[パンフレットの zip 形式アーカイブ](https://github.com/MicrosoftLearning/mslearn-ai-studio/raw/main/data/brochures.zip)を `https://github.com/MicrosoftLearning/mslearn-ai-studio/raw/main/data/brochures.zip` からダウンロードし、ローカル ファイル システム上の「**brochures**」という名前のフォルダーに展開します。
-1. Azure AI Foundry ポータルで、プロジェクトの左側ナビゲーション ウィンドウで **[プレイグラウンド]** を選択し、**[チャット プレイグラウンド]** を選択します。
-1. プレイグラウンドの **[セットアップ]** ペインで、**[データを追加する]** セクションを展開し、**[データ ソースの追加]** を選択します。
-1. **[データの追加]** ウィザードで、ドロップダウン メニューを展開して **[Upload files]** を選択します。
-1. 次の設定で新しい Azure Blob Storage リソースを作成します。
-    - **[サブスクリプション]**:"*ご自身の Azure サブスクリプション*"
-    - **リソース グループ**: *使用する Azure AI Foundry リソースと同じリソース グループ*
-    - **ストレージ アカウント名**: *ストレージ アカウント リソースの有効な名前*
-    - **リージョン**: *使用する Azure AI Foundry リソースと同じリージョン*
-    - **パフォーマンス**: 標準
-    - **冗長性**: LRS
-1. リソースを作成し、デプロイが完了するまで待ちます。
-1. [Azure AI Foundry] タブに戻り、Azure Blob Storage リソースの一覧を更新し、新しく作成したアカウントを選択します。
+1. Azure AI Foundry ポータル内にあるプロジェクトの左側ナビゲーション ウィンドウ内で、**[マイ アセット]** の下にある **[データ + インデックス]** ページを選択します。
+1. **[+ New data]\(+ 新しいデータ\)** を選択します。
+1. **[データの追加]** ウィザードで、ドロップダウン メニューを展開して **[Upload files/folders]\(ファイル/フォルダーのアップロード\)** を選択します。
+1. **[フォルダーのアップロード]** を選択し、**brochures** フォルダーを選択します。 フォルダー内のすべてのファイルが一覧表示されるまで待ちます。
+1. **[次へ]** を選択して、データ名を `brochures` に設定します。
+1. フォルダーがアップロードされるまで待ちます。これにはいくつかの .pdf ファイルが含まれています。
 
-    > **注**: Azure OpenAI にリソースにアクセスするためのアクセス許可が必要であるという警告が表示された場合は、**[CORS をオンにする]** を選択します。
+## データのインデックスを作成する
 
-1. 次の設定で新しい Azure AI 検索リソースを作成します。
-    - **[サブスクリプション]**:"*ご自身の Azure サブスクリプション*"
-    - **リソース グループ**: *使用する Azure AI Foundry リソースと同じリソース グループ*
-    - **サービス名**: *使用する AI 検索リソースの有効な名前*
-    - **リージョン**: *使用する Azure AI Foundry リソースと同じリージョン*
-    - **価格レベル**: Basic
+これで、ご利用のプロジェクトにデータ ソースを追加したので、それを使用して Azure AI 検索リソース内にインデックスを作成することができます。
 
-1. リソースを作成し、デプロイが完了するまで待ちます。
-1. [Azure AI Foundry] タブに戻り、Azure AI 検索リソースの一覧を更新し、新しく作成したアカウントを選択します。
-1. インデックスの名前を `brochures-index` に設定します。
-1. **[ベクトル検索をこの検索リソースに追加します。]** オプションを有効にし、先ほどデプロイした埋め込みモデルを選択します。 [**次へ**] を選択します。
+1. Azure AI Foundry ポータル内にあるプロジェクトの左側ナビゲーション ウィンドウ内で、**[マイ アセット]** の下にある **[データ + インデックス]** ページを選択します。
+1. **[インデックス]** タブで、次の設定で新しいインデックスを追加します。
+    - **ソースの場所**:
+        - **データ ソース**: Azure AI Foundry のデータ
+            - [データ ソース] で **[brochures]** を選択します**
+    - **インデックスの構成**:
+        - **Azure AI 検索サービスの選択**: *次の設定で新しい Azure AI 検索リソースを作成します*。
+            - **サブスクリプション**: *お使いの Azure サブスクリプション*
+            - **リソース グループ**: *お使いの AI ハブと同じリソース グループ*
+            - **サービス名**: *お使いの AI 検索リソースの有効な名前*
+            - **場所**: *お使いの AI ハブと同じ場所*
+            - **価格レベル**: Basic
+            
+            AI 検索リソースが作成されるまで待ちます。 次に、Azure AI Foundry に戻り、**[その他の Azure AI 検索リソースへの接続]** を選択し、先ほど作成した AI 検索リソースへの接続を追加して、インデックスの構成を完了します。
+ 
+        - **ベクトル インデックス**: `brochures-index`
+        - **仮想マシン**:自動選択
+    - **[検索設定]**:
+        - **[Vector settings]**:ベクトル検索をこの検索リソースに追加します
+        - **Azure OpenAI 接続**: *ハブの既定の Azure OpenAI リソースを選択します。*
+        - **埋め込みモデル**: text-embedding-ada-002
+        - **埋め込みモデルのデプロイ**: ** text-embedding-ada-002 *モデルのデプロイ*
 
-   >**注**: デプロイされた埋め込みモデルが **[データの追加]** ウィザードで認識されるまでに時間がかかる場合があるため、ベクトル検索オプションを有効にできない場合は、ウィザードをキャンセルして数分待ってから、もう一度やり直してください。
+1. ベクトル インデックスを作成し、そのインデックス作成プロセスが完了するまで待ちます。サブスクリプションで使用可能なコンピューティング リソースによっては、しばらく時間がかかる場合があります。
 
-1. 先ほど抽出した **brochures** フォルダーからすべての.pdf ファイルをアップロードし、**[次へ]** を選択します。
-1. **[データ管理]** ステップで、検索の種類に **[ハイブリッド (ベクトル + キーワード)]** とチャンク サイズに **[1024]** を選択します。 [**次へ**] を選択します。
-1. **[データ接続]** ステップで、認証の種類に **[API キー]** を選択します。 [**次へ**] を選択します。
-1. すべての構成ステップを確認し、**[保存して閉じる]** を選択します。
-1. インデックス作成プロセスが完了するまで待ちます。サブスクリプションで使用可能なコンピューティング リソースによっては、しばらく時間がかかる場合があります。
+    このインデックス作成操作は、次のジョブで構成されます。
+
+    - ご利用の brochures データ内でテキスト トークンを分解し、塊に分けて、埋め込みます。
+    - Azure AI 検索インデックスを作成します。
+    - インデックス資産を登録します。
 
     > **ヒント**: インデックスが作成されるのを待っている間に、ダウンロードしたパンフレットを見て内容を把握しましょう。
 
@@ -100,40 +109,51 @@ Azure AI Foundry リソースの作成から始めましょう。
 
 RAG ベースのプロンプト フローでインデックスを使用する前に、それを使用して生成 AI 応答に作用することができるのを確認しましょう。
 
-1. [チャット プレイグラウンド] ページの [セットアップ] ペインで、**gpt-4o** モデル デプロイが選択されていることを確認します。 次に、メインの [チャット セッション] パネルで、プロンプト「`Where can I stay in New York?`」を送信します。
+1. 左側ナビゲーション ウィンドウ内で、**[プレイグラウンド]** ページを選択し、**[チャット]** プレイグラウンドを開きます。
+1. [チャット] プレイグラウンド ページの [セットアップ] ウィンドウで、**GPT-4** モデル デプロイが選択されていることを確認します。 次に、メインの [チャット セッション] パネルで、プロンプト「`Where can I stay in New York?`」を送信します。
+1. その応答を確認します。これは、インデックスからのデータを含まない、このモデルからの一般的な回答であるはずです。
+1. [セットアップ] ウィンドウで、**"データの追加"** フィールドを展開し、**brochures-index** プロジェクト インデックスを追加して、**[ハイブリッド (ベクトル + キーワード)]** 検索タイプを選択します。
+
+   > **ヒント**: 場合によっては、新しく作成されたインデックスをすぐに使用できない場合があります。 通常はブラウザーの更新で解決しますが、インデックスが見つからない問題がそれでも解決しない場合は、インデックスが認識されるまで待つ必要がある場合があります。
+
+1. インデックスが追加され、チャット セッションが再開された後に、プロンプト「`Where can I stay in New York?`」を再送信します。
 1. その応答を確認します。インデックス内のデータに基づいているはずです。
 
-## RAG クライアント アプリを作成する
+<!-- DEPRECATED STEPS
 
-作業用インデックスが作成されたので、Azure OpenAI SDK を使用して、クライアント アプリケーションに RAG パターンを実装できます。 これを実現するコードを簡単な例で見てみましょう。
+## Create a RAG client app with the Azure AI Foundry and Azure OpenAI SDKs
 
-> **ヒント**: Python または Microsoft C# を使用して RAG ソリューションを開発することを選択できます。 選択した言語の適切なセクションの指示に従います。
+Now that you have a working index, you can use the Azure AI Foundry and Azure OpenAI SDKs to implement the RAG pattern in a client application. Let's explore the code to accomplish this in a simple example.
 
-### アプリケーション構成を準備する
+> **Tip**: You can choose to develop your RAG solution using Python or Microsoft C#. Follow the instructions in the appropriate section for your chosen language.
 
-1. Azure portal を含むブラウザー タブに戻ります (既存のタブで Azure AI Foundry ポータルを開いたままにします)。
-1. ページ上部の検索バーの右側にある **[\>_]** ボタンを使用して、Azure portal に新しい Cloud Shell を作成し、サブスクリプションにストレージがない ***PowerShell*** 環境を選択します。
+### Prepare the application configuration
 
-    Azure portal の下部にあるペインに Cloud Shell のコマンド ライン インターフェイスが表示されます。 作業しやすくするために、このウィンドウのサイズを変更したり最大化したりすることができます。
+1. In the Azure AI Foundry portal, view the **Overview** page for your project.
+1. In the **Project details** area, note the **Project connection string**. You'll use this connection string to connect to your project in a client application.
+1. Return to the browser tab containing the Azure portal (keeping the Azure AI Foundry portal open in the existing tab).
+1. Use the **[\>_]** button to the right of the search bar at the top of the page to create a new Cloud Shell in the Azure portal, selecting a ***PowerShell*** environment with no storage in your subscription.
 
-    > **注**: *Bash* 環境を使用するクラウド シェルを以前に作成した場合は、それを ***PowerShell*** に切り替えます。
+    The cloud shell provides a command-line interface in a pane at the bottom of the Azure portal. You can resize or maximize this pane to make it easier to work in.
 
-1. Cloud Shell ツール バーの **[設定]** メニューで、**[クラシック バージョンに移動]** を選択します (これはコード エディターを使用するのに必要です)。
+    > **Note**: If you have previously created a cloud shell that uses a *Bash* environment, switch it to ***PowerShell***.
 
-    **<font color="red">続行する前に、クラシック バージョンの Cloud Shell に切り替えたことを確認します。</font>**
+1. In the cloud shell toolbar, in the **Settings** menu, select **Go to Classic version** (this is required to use the code editor).
 
-1. Cloud Shell 画面で、次のコマンドを入力して、この演習のコード ファイルを含む GitHub リポジトリをクローンします (コマンドを入力するか、クリップボードにコピーしてから、コマンド ラインで右クリックし、プレーンテキストとして貼り付けます)。
+    **<font color="red">Ensure you've switched to the classic version of the cloud shell before continuing.</font>**
+
+1. In the cloud shell pane, enter the following commands to clone the GitHub repo containing the code files for this exercise (type the command, or copy it to the clipboard and then right-click in the command line and paste as plain text):
 
     ```
     rm -r mslearn-ai-foundry -f
     git clone https://github.com/microsoftlearning/mslearn-ai-studio mslearn-ai-foundry
     ```
 
-    > **ヒント**: Cloudshell にコマンドを貼り付けると、出力が大量のスクリーン バッファーを占有する可能性があります。 `cls` コマンドを入力して、各タスクに集中しやすくすることで、スクリーンをクリアできます。
+    > **Tip**: As you paste commands into the cloudshell, the output may take up a large amount of the screen buffer. You can clear the screen by entering the `cls` command to make it easier to focus on each task.
 
-1. リポジトリが複製されたら、チャット アプリケーションのコード ファイルを含んだフォルダーに移動します。
+1. After the repo has been cloned, navigate to the folder containing the chat application code files:
 
-    > **注**: 選択したプログラミング言語の手順に従います。
+    > **Note**: Follow the steps for your chosen programming language.
 
     **Python**
 
@@ -147,24 +167,26 @@ RAG ベースのプロンプト フローでインデックスを使用する前
    cd mslearn-ai-foundry/labfiles/rag-app/c-sharp
     ```
 
-1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、OpenAI SDK ライブラリをインストールします。
+1. In the cloud shell command-line pane, enter the following command to install the libraries you'll use:
 
     **Python**
 
     ```
    python -m venv labenv
    ./labenv/bin/Activate.ps1
-   pip install -r requirements.txt openai
+   pip install python-dotenv azure-ai-projects azure-identity openai
     ```
 
     **C#**
 
     ```
-   dotnet add package Azure.AI.OpenAI
+   dotnet add package Azure.Identity
+   dotnet add package Azure.AI.Projects --prerelease
+   dotnet add package Azure.AI.OpenAI --prerelease
     ```
     
 
-1. 次のコマンドを入力して、提供されている構成ファイルを編集します。
+1. Enter the following command to edit the configuration file that has been provided:
 
     **Python**
 
@@ -178,21 +200,18 @@ RAG ベースのプロンプト フローでインデックスを使用する前
    code appsettings.json
     ```
 
-    このファイルをコード エディターで開きます。
+    The file is opened in a code editor.
 
-1. コード ファイルで次のプレースホルダーを置き換えます。 
-    - **your_openai_endpoint**: Azure AI Foundry ポータルのプロジェクトの **[概要]** ページの Open AI エンドポイント (Azure AI 推論または Azure AI サービス機能ではなく、 **Azure OpenAI** 機能タブを選択してください)。
-    - **your_openai_api_key**: Azure AI Foundry ポータルのプロジェクトの **[概要]** ページから Open AI API キー (Azure AI 推論または Azure AI サービス機能ではなく、**Azure OpenAI** 機能タブを選択してください)。
-    - **your_chat_model**: Azure AI Foundry ポータルの **[モデル + エンドポイント]** ページから、**gpt-4o** モデル デプロイに割り当てた名前 (既定の名前は `gpt-4o`)。
-    - **your_embedding_model**: Azure AI Foundry ポータルの **[モデル + エンドポイント]** ページから、**text-embedding-ada-002** モデル デプロイに割り当てた名前 (既定の名前は `text-embedding-ada-002`)。
-    - **your_search_endpoint**: Azure AI 検索リソースの URL。 これは、Azure AI Foundry ポータルの **[管理センター]** にあります。
-    - **your_search_api_key**: Azure AI 検索リソースの API キー。 これは、Azure AI Foundry ポータルの **[管理センター]** にあります。
-    - **your_index**: Azure AI Foundry ポータルのプロジェクトの **[データとインデックス]** ページのインデックス名に置き換えます (これは `brochures-index` にする必要があります)。
-1. プレースホルダーを置き換えたら、コード エディター内で、**Ctrl + S** コマンドを使用するか、**右クリックして保存**で変更を保存してから、**Ctrl + Q** コマンドを使用するか、**右クリックして終了**で、Cloud Shell コマンド ラインを開いたままコード エディターを閉じます。
+1. In the code file, replace the following placeholders: 
+    - **your_project_connection_string**: Replace with the connection string for your project (copied from the project **Overview** page in the Azure AI Foundry portal).
+    - **your_gpt_model_deployment** Replace with the name you assigned to your **gpt-4o** model deployment.
+    - **your_embedding_model_deployment**: Replace with the name you assigned to your **text-embedding-ada-002** model deployment.
+    - **your_index**: Replace with your index name (which should be `brochures-index`).
+1. After you've replaced the placeholders, in the code editor, use the **CTRL+S** command or **Right-click > Save** to save your changes and then use the **CTRL+Q** command or **Right-click > Quit** to close the code editor while keeping the cloud shell command line open.
 
-### RAG パターンを実装するコードを調べる
+### Explore code to implement the RAG pattern
 
-1. 次のコマンドを入力して、提供されているコード ファイルを編集します。
+1. Enter the following command to edit the code file that has been provided:
 
     **Python**
 
@@ -206,22 +225,24 @@ RAG ベースのプロンプト フローでインデックスを使用する前
    code Program.cs
     ```
 
-1. ファイル内のコードを確認し、次の点に注意します。
-    - エンドポイント、キー、チャット モデルを使用して Azure OpenAI クライアントを作成します。
-    - 旅行関連のチャット ソリューションに適したシステム メッセージを作成します。
-    - プロンプト (ユーザーによる入力に基づいたシステムおよびユーザー メッセージを含む) を Azure OpenAI クライアントに送信し、次を追加します。
-        - クエリを実行する Azure AI Search インデックスの接続の詳細。
-        - クエリのベクター化に使用する埋め込みモデルの詳細\*。
-    - グラウンディングされたプロンプトからの応答を表示します。
-    - チャット履歴に応答を追加します。
+1. Review the code in the file, noting that it:
+    - Uses the Azure AI Foundry SDK to connect to your project (using the project connection string)
+    - Creates an authenticated Azure OpenAI client from your project connection.
+    - Retrieves the default Azure AI Search connection from your project so it can determine the endpoint and key for your Azure AI Search service.
+    - Creates a suitable system message.
+    - Submits a prompt (including the system and a user message based on the user input) to the Azure OpenAI client, adding:
+        - Connection details for the Azure AI Search index to be queried.
+        - Details of the embedding model to be used to vectorize the query\*.
+    - Displays the response from the grounded prompt.
+    - Adds the response to the chat history.
 
-    \**検索インデックスのクエリはプロンプトに基づいており、インデックス付きドキュメント内の関連するテキストを検索するために使用されます。クエリをテキストとして送信するキーワードベースの検索を使用できますが、ベクターベースの検索を使用する方が効率的です。そのため、埋め込みモデルを使用してクエリ テキストを送信する前にベクター化することができます。*
+    \* *The query for the search index is based on the prompt, and is used to find relevant text in the indexed documents. You can use a keyword-based search that submits the query as text, but using a vector-based search can be more efficient - hence the use of an embedding model to vectorize the query text before submitting it.*
 
-1. **Ctrl + Q** コマンドを使用して、Cloud Shell コマンド ラインを開いたまま、変更を保存せずにコード エディターを閉じます。
+1. Use the **CTRL+Q** command to close the code editor without saving any changes, while keeping the cloud shell command line open.
 
-### チャット アプリケーションを実行する
+### Run the chat application
 
-1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力してアプリを実行します。
+1. In the cloud shell command-line pane, enter the following command to run the app:
 
     **Python**
 
@@ -235,13 +256,15 @@ RAG ベースのプロンプト フローでインデックスを使用する前
    dotnet run
     ```
 
-1. メッセージが表示されたら、`Where should I go on vacation to see architecture?` などの質問を入力し、生成 AI モデルからの応答を確認します。
+1. When prompted, enter a question, such as `Where should I go on vacation to see architecture?` and review the response from your generative AI model.
 
-    なお、応答には、回答が見つかったインデックス付きデータを示すソース参照が含まれています。
+    Note that the response includes source references to indicate the indexed data in which the answer was found.
 
-1. フォローアップの質問を試します (例: `Where can I stay there?`)。
+1. Try a follow-up question, for example `Where can I stay there?`
 
-1. 終了したら、`quit` を入力してプログラムを終了します。 次に、Cloud Shell 画面を閉じます。
+1. When you're finished, enter `quit` to exit the program. Then close the cloud shell pane.
+
+-->
 
 ## クリーンアップ
 
