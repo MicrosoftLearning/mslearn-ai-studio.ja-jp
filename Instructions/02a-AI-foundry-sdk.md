@@ -12,51 +12,33 @@ lab:
 
 > **注**: この演習は、変更される可能性があるプレリリース SDK に基づいています。 必要に応じて、特定のバージョンのパッケージを使用しました。利用可能な最新バージョンが反映されていない可能性があります。 予期しない動作、警告、またはエラーが発生する場合があります。
 
-## Azure AI Foundry プロジェクトを作成する
+## Azure AI Foundry プロジェクトにモデルをデプロイする
 
-まず、Azure AI Foundry プロジェクトを作成します。
+まず、Azure AI Foundry プロジェクトにモデルをデプロイします。
 
 1. Web ブラウザーで [Azure AI Foundry ポータル](https://ai.azure.com) (`https://ai.azure.com`) を開き、Azure 資格情報を使用してサインインします。 初めてサインインするときに開いたヒントまたはクイック スタート ウィンドウを閉じます。また、必要に応じて左上にある **Azure AI Foundry** ロゴを使用してホーム ページに移動します。それは次の画像のようになります (**[ヘルプ]** ウィンドウが開いている場合は閉じます)。
 
     ![Azure AI Foundry ポータルのスクリーンショット。](./media/ai-foundry-home.png)
 
-1. ホーム ページで、**[+ 作成]** を選択します。
-1. **[プロジェクトの作成]** ウィザードで、有効なプロジェクト名を入力し、既存のハブが推奨された場合は、新しいハブを作成するオプションを選択します。 次に、ハブとプロジェクトをサポートするために自動的に作成される Azure リソースを確認します。
-1. **[カスタマイズ]** を選択し、ハブに次の設定を指定します。
-    - **ブ名**: *ハブの有効な名前*
+1. ホーム ページの **[モデルと機能を調査する]** セクションで、プロジェクトで使用する `gpt-4o` モデルを検索します。
+1. 検索結果で **gpt-4o** モデルを選んで詳細を確認してから、モデルのページの上部にある **[このモデルを使用する]** を選択します。
+1. プロジェクトの作成を求められたら、プロジェクトの有効な名前を入力し、**[詳細]** オプションを展開します。
+1. **[カスタマイズ]** を選択し、プロジェクトに次の設定を指定します。
+    - **Azure AI Foundry リソース**: *Azure AI Foundry リソースの有効な名前*
     - **[サブスクリプション]**:"*ご自身の Azure サブスクリプション*"
-    - **リソース グループ**: *リソース グループを作成または選択します。*
-    - **場所**: **[選択に関するヘルプ]** を選択し、次に [場所ヘルパー] ウィンドウで **gpt-4o** を選択し、推奨されるリージョンを選択します\*
-    - **Azure AI サービスまたは Azure OpenAI への接続**: *新しい AI サービス リソースを作成します*
-    - **Azure AI 検索への接続**:接続をスキップする
+    - **リソース グループ**: *リソース グループを作成または選択します*
+    - **リージョン**: ***AI サービスでサポートされている場所を選択します***\*
 
-    > \* Azure OpenAI リソースは、リージョンのモデル クォータによって制限されます。 演習の後半でクォータ制限を超えた場合は、別のリージョンに別のリソースを作成する必要が生じる可能性があります。
+    > \* 一部の Azure AI リソースは、リージョンのモデル クォータによって制限されます。 演習の後半でクォータ制限を超えた場合は、別のリージョンに別のリソースを作成する必要が生じる可能性があります。
 
-1. **[次へ]** を選択し、構成を確認します。 **[作成]** を選択し、プロセスが完了するまで待ちます。
-1. プロジェクトが作成されたら、表示されているヒントをすべて閉じて、Azure AI Foundry ポータルのプロジェクト ページを確認します。これは次の画像のようになっているはずです。
+1. **[作成]** を選択し、選んだ gpt-4 モデル デプロイを含むプロジェクトが作成されるまで待ちます。
+1. プロジェクトが作成されると、チャット プレイグラウンドが自動的に開きます。
+1. **[セットアップ]** ウィンドウで、モデル デプロイの名前をメモします (**gpt-4o** のはずです)。 これを確認するには、**[モデルとエンドポイント]** ページでデプロイを表示します (左側のナビゲーション ウィンドウでそのページを開くだけです)。
+1. 左側のナビゲーション ウィンドウで **[概要]** を選択すると、プロジェクトのメイン ページが表示されます。次のようになります。
 
-    ![Azure AI Foundry ポータルの Azure AI プロジェクトの詳細のスクリーンショット。](./media/ai-foundry-project.png)
+    > **注**: *アクセス許可が不十分です** というエラーが表示された場合は、**[修正]** ボタンを使用してエラーを解決します。
 
-## 生成 AI モデルを展開する
-
-これで、チャット アプリケーションをサポートする生成 AI 言語モデルをデプロイする準備ができました。 この例では、OpenAI GPT-4o モデルを使用します。しかし、原則はどのモデルでも同じです。
-
-1. Azure AI Foundry プロジェクト ページの右上にあるツール バーで、**[プレビュー機能]** (**&#9215**) アイコンを使用して、**[Azure AI モデル推論サービスにモデルをデプロイする]** 機能を有効にします。 この機能により、アプリケーション コードで使用する Azure AI 推論サービスでモデル デプロイを使用できるようになります。
-1. プロジェクトの左側のウィンドウの **[マイ アセット]** セクションで、**[モデル + エンドポイント]** ページを選択します。
-1. **[モデル + エンドポイント]** ページの **[モデル デプロイ]** タブの **[+ モデルのデプロイ]** メニューで、**[基本モデルのデプロイ]** を選択します。
-1. 一覧で **GPT-4o** モデルを検索してから、それを選択して確認します。
-1. デプロイの詳細で **[カスタマイズ]** を選択して、以下の設定でモデルをデプロイします。
-    - **デプロイ名**: モデル デプロイの有効な名前**
-    - **デプロイの種類**: グローバル標準
-    - **バージョンの自動更新**: 有効
-    - **モデルのバージョン**: *利用可能な最新バージョンを選択します*
-    - **接続されている AI リソース**: *使用している Azure OpenAI リソース接続を選択します*
-    - **1 分あたりのトークンのレート制限 (1,000)**: 50,000 * (または 50,000 未満の場合はサブスクリプションで使用可能な最大値)*
-    - **コンテンツ フィルター**: DefaultV2
-
-    > **注**:TPM を減らすと、ご利用のサブスクリプション内で使用可能なクォータが過剰に消費されることを回避するのに役立ちます。 この演習で使用するデータには、50,000 TPM で十分です。 使用可能なクォータがこれより低い場合は、演習を完了できますが、レート制限を超えるとエラーが発生する可能性があります。
-
-1. デプロイが完了するまで待ちます。
+    ![Azure AI Foundry プロジェクトの概要ページのスクリーンショット。](./media/ai-foundry-project.png)
 
 ## モデルとチャットするクライアント アプリケーションを作成する
 
@@ -67,7 +49,7 @@ lab:
 ### アプリケーション構成を準備する
 
 1. Azure AI Foundry ポータルで、プロジェクトの **[概要]** ページを表示します。
-1. **[プロジェクトの詳細]** エリアで、**[プロジェクト接続文字列]** の内容を書き留めます。 この接続文字列を使用して、クライアント アプリケーションでプロジェクトに接続します。
+1. **[プロジェクトの詳細]** エリアの **[Azure AI Foundry プロジェクト エンドポイント]** をメモします。 クライアント アプリケーションで、このエンドポイントを使用してプロジェクトに接続します。
 1. 新しいブラウザー タブを開きます (既存のタブで Azure AI Foundry ポータルを開いたままにします)。 新しいブラウザー タブで [Azure portal](https://portal.azure.com) (`https://portal.azure.com`) を開き、メッセージに応じて Azure 資格情報を使用してサインインします。
 
     ウェルカム通知を閉じて、Azure portal のホーム ページを表示します。
@@ -85,8 +67,8 @@ lab:
 1. Cloud Shell 画面で、次のコマンドを入力して、この演習のコード ファイルを含む GitHub リポジトリを複製します (コマンドを入力するか、クリップボードにコピーしてから、コマンド ラインで右クリックし、プレーンテキストとして貼り付けます)。
 
     ```
-    rm -r mslearn-ai-foundry -f
-    git clone https://github.com/microsoftlearning/mslearn-ai-studio mslearn-ai-foundry
+   rm -r mslearn-ai-foundry -f
+   git clone https://github.com/microsoftlearning/mslearn-ai-studio mslearn-ai-foundry
     ```
 
     > **ヒント**: Cloudshell にコマンドを入力すると、出力が大量のスクリーン バッファーを占有する可能性があります。 `cls` コマンドを入力して、各タスクに集中しやすくすることで、スクリーンをクリアできます。
@@ -107,7 +89,7 @@ lab:
    cd mslearn-ai-foundry/labfiles/chat-app/c-sharp
     ```
 
-1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、これから使用するライブラリをインストールします。
+1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、使用するライブラリをインストールします。
 
     **Python**
 
@@ -121,8 +103,8 @@ lab:
 
     ```
    dotnet add package Azure.Identity
-   dotnet add package Azure.AI.Projects --version 1.0.0-beta.3
-   dotnet add package Azure.AI.Inference --version 1.0.0-beta.3
+   dotnet add package Azure.AI.Projects --version 1.0.0-beta.9
+   dotnet add package Azure.AI.Inference --version 1.0.0-beta.5
     ```
     
 
@@ -142,7 +124,7 @@ lab:
 
     このファイルをコード エディターで開きます。
 
-1. コード ファイルで、**your_project_connection_string** プレースホルダーをプロジェクトの接続文字列 (Azure AI Foundry ポータルでプロジェクトの **[概要]** ページからコピーしたもの) に置き換え、**your_model_deployment** プレースホルダーを GPT-4 モデル デプロイに割り当てた名前に置き換えます。
+1. コード ファイルで、**your_project_endpoint** プレースホルダーをプロジェクトのエンドポイント (Azure AI Foundry ポータルでプロジェクトの **[概要]** ページからコピーしたもの) に置き換え、**your_model_deployment** プレースホルダーをお使いの gpt-4 モデル デプロイの名前に置き換えます。
 1. プレースホルダーを置き換えたら、コード エディター内で、**Ctrl + S** コマンドを使用するか、**右クリックして保存**で変更を保存してから、**Ctrl + Q** コマンドを使用するか、**右クリックして終了**で、Cloud Shell コマンド ラインを開いたままコード エディターを閉じます。
 
 ### プロジェクトに接続してモデルとチャットするためのコードを記述する
@@ -193,17 +175,25 @@ lab:
 
     ```python
    # Initialize the project client
-   projectClient = AIProjectClient.from_connection_string(
-        conn_str=project_connection,
-        credential=DefaultAzureCredential())
+   projectClient = AIProjectClient(            
+            credential=DefaultAzureCredential(
+                exclude_environment_credential=True,
+                exclude_managed_identity_credential=True
+            ),
+            endpoint=project_connection,
+        )
     ```
 
     **C#**
 
     ```csharp
    // Initialize the project client
-   var projectClient = new AIProjectClient(project_connection,
-                        new DefaultAzureCredential());
+   DefaultAzureCredentialOptions options = new()
+       { ExcludeEnvironmentCredential = true,
+        ExcludeManagedIdentityCredential = true };
+   var projectClient = new AIProjectClient(
+        new Uri(project_connection),
+        new DefaultAzureCredential(options));
     ```
 
 1. コメント**チャット クライアントの取得**を探して、次のコードを追加し、モデルとチャットするためのクライアント オブジェクトを作成します。
@@ -278,9 +268,20 @@ lab:
 
 1. **CTRL + S** コマンドを使用して、変更をコード ファイルに保存します。
 
-### チャット アプリケーションを実行する
+### Azure にサインインしてアプリを実行する
 
-1. コード エディターの下の Cloud Shell コマンド ライン ペインで、次のコマンドを入力してアプリを実行します。
+1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して Azure にサインインします。
+
+    ```
+   az login
+    ```
+
+    **<font color="red">Cloud Shell セッションが既に認証されている場合でも、Azure にサインインする必要があります。</font>**
+
+    > **注**: ほとんどのシナリオでは、*az ログイン*を使用するだけで十分です。 ただし、複数のテナントにサブスクリプションがある場合は、*[--tenant]* パラメーターを使用してテナントを指定する必要があります。 詳細については、「[Azure CLI を使用して対話形式で Azure にサインインする](https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively)」を参照してください。
+    
+1. メッセージが表示されたら、指示に従って新しいタブでサインイン ページを開き、指定された認証コードと Azure 資格情報を入力します。 次に、コマンド ラインでサインイン プロセスを完了し、プロンプトが表示されたら、Azure AI Foundry ハブを含むサブスクリプションを選択します。
+1. サインインしたら、次のコマンドを入力してアプリケーションを実行します。
 
     **Python**
 
@@ -300,150 +301,14 @@ lab:
 
 > **ヒント**: レート制限を超えたためにアプリが使用不能になる場合。 数秒待ってから、やり直してください。 サブスクリプションで使用可能なクォータが不足している場合は、モデルが応答できない可能性があります。
 
-## OpenAI SDK を使用する
-
-クライアント アプリは、Azure AI モデル推論 SDK を使用して構築されています。つまり、Azure AI モデル推論サービスにデプロイされたどのモデルでも使用できます。 デプロイしたモデルは OpenAI GPT モデルであり、OpenAI SDK を使用して実行することもできます。
-
-OpenAI SDK を使用してチャット アプリケーションを実装する方法を確認するために、いくつかのコードを変更してみましょう。
-
-1. コード フォルダー (*python* または *c-sharp*) の Cloud Shell コマンド ラインで、次のコマンドを入力して必要なパッケージをインストールします。
-
-    **Python**
-
-    ```
-   pip install openai
-    ```
-
-    **C#**
-
-    ```
-   dotnet add package Azure.AI.Projects --version 1.0.0-beta.6
-   dotnet add package Azure.AI.OpenAI --prerelease
-    ```
-
-> **注**: Azure AI モデル推論 SDK との一部の非互換性に対する暫定的な回避策として、Azure.AI.Projects パッケージの別のプレリリース バージョンが必要です。
-
-1. コード ファイル (*chat-app.py* または *Program.cs*) がまだ開いていない場合は、次のコマンドを入力してコード エディターで開きます。
-
-    **Python**
-
-    ```
-   code chat-app.py
-    ```
-
-    **C#**
-
-    ```
-   code Program.cs
-    ```
-
-1. コード ファイルの先頭に、次の参照を追加します。
-
-    **Python**
-
-    ```python
-   import openai
-    ```
-
-    **C#**
-
-    ```csharp
-   using OpenAI.Chat;
-   using Azure.AI.OpenAI;
-    ```
-
-1. コメント**チャット クライアントの取得**を探して、クライアント オブジェクトの作成に使用するコードを次のように変更します。
-
-    **Python**
-
-    ```python
-   # Get a chat client 
-   openai_client = projectClient.inference.get_azure_openai_client(api_version="2024-10-21")
-    ```
-
-    **C#**
-
-    ```csharp
-   // Get a chat client
-   ChatClient openaiClient = projectClient.GetAzureOpenAIChatClient(model_deployment);
-    ```
-
-    > **注**: このコードは、Azure AI Foundry プロジェクト クライアントを使用して、プロジェクトに関連付けられている既定の Azure OpenAI サービス エンドポイントへの安全な接続を作成します。 また、Azure OpenAI SDK を使用し、Azure AI Foundry ポータルまたは Azure portal の対応する Azure OpenAI または AI Services リソース ページでサービス接続に表示されるエンドポイント URI を指定し、認証キーまたは Entra 資格情報トークンを使用して、エンドポイントに*直接*接続することもできます。 Azure OpenAI Service への接続の詳細については、「[Azure OpenAI でサポートされているプログラミング言語](https://learn.microsoft.com/azure/ai-services/openai/supported-languages)」をご覧ください。
-
-1. コメント**システム メッセージを使用したプロンプトの初期化**を探して、次のようにコードを修正し、システム プロンプトを使用してメッセージのコレクションを初期化します。
-
-    **Python**
-
-    ```python
-   # Initialize prompt with system message
-   prompt=[
-        {"role": "system", "content": "You are a helpful AI assistant that answers questions."}
-    ]
-    ```
-
-    **C#**
-
-    ```csharp
-   // Initialize prompt with system message
-    var prompt = new List<ChatMessage>(){
-        new SystemChatMessage("You are a helpful AI assistant that answers questions.")
-    };
-    ```
-
-1. コメント**チャット完了の取得**を探して、次のようにコードを変更し、プロンプトにユーザー入力を追加し、モデルから完了を取得して、プロンプトに完了を追加します。
-
-    **Python**
-
-    ```python
-   # Get a chat completion
-   prompt.append({"role": "user", "content": input_text})
-   response = openai_client.chat.completions.create(
-        model=model_deployment,
-        messages=prompt)
-   completion = response.choices[0].message.content
-   print(completion)
-   prompt.append({"role": "assistant", "content": completion})
-    ```
-
-    **C#**
-
-    ```csharp
-   // Get a chat completion
-   prompt.Add(new UserChatMessage(input_text));
-   ChatCompletion completion = openaiClient.CompleteChat(prompt);
-   var completionText = completion.Content[0].Text;
-   Console.WriteLine(completionText);
-   prompt.Add(new AssistantChatMessage(completionText));
-    ```
-
-1. **CTRL + S** コマンドを使用して、変更をコード ファイルに保存します。
-
-1. コード エディターの下の Cloud Shell コマンド ライン ペインで、次のコマンドを入力してアプリを実行します。
-
-    **Python**
-
-    ```
-   python chat-app.py
-    ```
-
-    **C#**
-
-    ```
-   dotnet run
-    ```
-
-1. 以前と同様に質問を送信して、アプリをテストします。 終了したら、`quit` を入力してプログラムを終了します。
-
-    > **注**: Azure AI モデル推論 SDK と OpenAI SDK では、同様のクラスとコード コンストラクトが使用されるため、最小限の変更が必要です。 Azure AI モデル推論サービス エンドポイントにデプロイされる*どの*モデルでも Azure AI モデル推論 SDK を使用できます。 OpenAI SDK は OpenAI モデルでのみ機能しますが、Azure AI モデル推論サービス エンドポイントまたは Azure OpenAI エンドポイントにデプロイされたモデルに使用できます。  
-
 ## まとめ
 
-この演習では、Azure AI Foundry SDK、Azure AI モデル推論、Azure OpenAI を使用して、Azure AI Foundry プロジェクトにデプロイした生成 AI モデル用のクライアント アプリケーションを作成しました。
+この演習では、Azure AI Foundry SDK を使用して、Azure AI Foundry プロジェクトにデプロイした生成 AI モデル用のクライアント アプリケーションを作成しました。
 
 ## クリーンアップ
 
 Azure AI Foundry ポータルを確認し終わったら、不要な Azure コストが発生しないように、この演習で作成したリソースを削除する必要があります。
 
-1. Azure portal が表示されているブラウザー タブに戻り (または、新しいブラウザー タブで `https://portal.azure.com` の [Azure portal](https://portal.azure.com) をもう一度開き)、この演習で使用したリソースがデプロイされているリソース グループの内容を表示します。
+1. [Azure ポータル](https://portal.azure.com)を開き、この演習で使用したリソースをデプロイしたリソース グループの内容を表示します。
 1. ツール バーの **[リソース グループの削除]** を選びます。
 1. リソース グループ名を入力し、削除することを確認します。
