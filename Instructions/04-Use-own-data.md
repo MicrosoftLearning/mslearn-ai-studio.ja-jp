@@ -10,9 +10,15 @@ lab:
 
 この演習では Azure AI Foundry を使用して、カスタム データを生成 AI ソリューションに統合します。
 
-この演習は約 **45** 分かかります。
+> **注**:この演習のコードは、変更される可能性があるプレリリース SDK ソフトウェアに基づいています。 必要に応じて、特定のバージョンのパッケージを使用しました。利用可能な最新バージョンが反映されていない可能性があります。 予期しない動作、警告、またはエラーが発生する場合があります。
 
-> **注**: この演習はプレリリース サービスに基づいていますが、このサービスは変更される可能性があります。
+この演習は、Azure OpenAI Python SDK に基づいていますが、次のような複数の言語固有の SDK を使用して AI チャット アプリケーションを開発することができます。
+
+- [Python 用の OpenAI](https://pypi.org/project/openai/)
+- [Microsoft .NET 用の Azure OpenAI](https://www.nuget.org/packages/Azure.AI.OpenAI)
+- [TypeScript 用の Azure OpenAI](https://www.npmjs.com/package/@azure/openai)
+
+この演習は約 **45** 分かかります。
 
 ## Azure AI Foundry ハブとプロジェクトを作成する
 
@@ -124,8 +130,6 @@ RAG ベースのプロンプト フローでインデックスを使用する前
 
 作業用インデックスが作成されたので、Azure OpenAI SDK を使用して、クライアント アプリケーションに RAG パターンを実装できます。 これを実現するコードを簡単な例で見てみましょう。
 
-> **ヒント**: Python または Microsoft C# を使用して RAG ソリューションを開発することを選択できます。 選択した言語の適切なセクションの指示に従います。
-
 ### アプリケーション構成を準備する
 
 1. Azure portal を含むブラウザー タブに戻ります (既存のタブで Azure AI Foundry ポータルを開いたままにします)。
@@ -150,23 +154,11 @@ RAG ベースのプロンプト フローでインデックスを使用する前
 
 1. リポジトリが複製されたら、チャット アプリケーションのコード ファイルを含んだフォルダーに移動します。
 
-    > **注**: 選択したプログラミング言語の手順に従います。
-
-    **Python**
-
     ```
    cd mslearn-ai-foundry/labfiles/rag-app/python
     ```
 
-    **C#**
-
-    ```
-   cd mslearn-ai-foundry/labfiles/rag-app/c-sharp
-    ```
-
 1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、OpenAI SDK ライブラリをインストールします。
-
-    **Python**
 
     ```
    python -m venv labenv
@@ -174,30 +166,15 @@ RAG ベースのプロンプト フローでインデックスを使用する前
    pip install -r requirements.txt openai
     ```
 
-    **C#**
-
-    ```
-   dotnet add package Azure.AI.OpenAI
-    ```
-    
-
 1. 次のコマンドを入力して、提供されている構成ファイルを編集します。
-
-    **Python**
 
     ```
    code .env
     ```
 
-    **C#**
-
-    ```
-   code appsettings.json
-    ```
-
     このファイルをコード エディターで開きます。
 
-1. コード ファイルで次のプレースホルダーを置き換えます。 
+1. 設定ファイルで次のプレースホルダーを置き換えます。 
     - **your_openai_endpoint**: Azure AI Foundry ポータルのプロジェクトの **[概要]** ページの Open AI エンドポイント (Azure AI 推論または Azure AI サービスの機能ではなく、必ず **[Azure OpenAI]** 機能タブを選択してください)。
     - **your_openai_api_key**: Azure AI Foundry ポータルのプロジェクトの **[概要]** ページの Open AI API キー (Azure AI 推論または Azure AI サービスの機能ではなく、必ず **[Azure OpenAI]** 機能タブを選択してください)。
     - **your_chat_model**: Azure AI Foundry ポータルの **[モデル + エンドポイント]** ページから、**gpt-4o** モデル デプロイに割り当てた名前 (既定の名前は `gpt-4o`)。
@@ -211,16 +188,8 @@ RAG ベースのプロンプト フローでインデックスを使用する前
 
 1. 次のコマンドを入力して、提供されているコード ファイルを編集します。
 
-    **Python**
-
     ```
    code rag-app.py
-    ```
-
-    **C#**
-
-    ```
-   code Program.cs
     ```
 
 1. ファイル内のコードを確認し、次の点に注意します。
@@ -240,19 +209,9 @@ RAG ベースのプロンプト フローでインデックスを使用する前
 
 1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力してアプリを実行します。
 
-    **Python**
-
     ```
    python rag-app.py
     ```
-
-    **C#**
-
-    ```
-   dotnet run
-    ```
-
-    > **ヒント**: .NET バージョン 9.0 がインストールされていないためにコンパイル エラーが発生した場合は、`dotnet --version` コマンドを使用して、環境にインストールされている .NET のバージョンを確認し、コード フォルダー内の **rag_app.csproj** ファイルを編集して **TargetFramework** 設定を適宜更新します。
 
 1. メッセージが表示されたら、`Where should I go on vacation to see architecture?` などの質問を入力し、生成 AI モデルからの応答を確認します。
 

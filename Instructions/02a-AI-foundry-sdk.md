@@ -6,11 +6,17 @@ lab:
 
 # 生成 AI チャット アプリを作成する
 
-この演習では、Azure AI Foundry SDK を使用して、プロジェクトに接続して言語モデルとチャットするシンプルなチャット アプリを作成します。
+この演習では、Azure AI Foundry Python SDK を使用して、プロジェクトに接続して言語モデルとチャットするシンプルなチャット アプリを作成します。
+
+> **注**:この演習は、変更される可能性があるプレリリース SDK ソフトウェアに基づいています。 必要に応じて、特定のバージョンのパッケージを使用しました。利用可能な最新バージョンが反映されていない可能性があります。 予期しない動作、警告、またはエラーが発生する場合があります。
+
+この演習は、Azure AI Foundry Python SDK に基づいていますが、次のような複数の言語固有の SDK を使用して AI チャット アプリケーションを開発することができます。
+
+- [Python 向け Azure AI プロジェクト](https://pypi.org/project/azure-ai-projects)
+- [Microsoft .NET 向け Azure AI プロジェクト](https://www.nuget.org/packages/Azure.AI.Projects)
+- [JavaScript 向け Azure AI プロジェクト](https://www.npmjs.com/package/@azure/ai-projects)
 
 この演習は約 **40** 分かかります。
-
-> **注**: この演習は、変更される可能性があるプレリリース SDK に基づいています。 必要に応じて、特定のバージョンのパッケージを使用しました。利用可能な最新バージョンが反映されていない可能性があります。 予期しない動作、警告、またはエラーが発生する場合があります。
 
 ## Azure AI Foundry プロジェクトにモデルをデプロイする
 
@@ -31,8 +37,11 @@ lab:
 
     > \* 一部の Azure AI リソースは、リージョンのモデル クォータによって制限されます。 演習の後半でクォータ制限を超えた場合は、別のリージョンに別のリソースを作成する必要が生じる可能性があります。
 
-1. **[作成]** を選択し、選んだ gpt-4 モデル デプロイを含むプロジェクトが作成されるまで待ちます。
-1. プロジェクトが作成されると、チャット プレイグラウンドが自動的に開きます。
+1. **[作成]** を選択して、プロジェクトが作成されるまで待ちます。 メッセージが表示されたら、**[Global Standard]** デプロイ タイプを使用して gpt-4o モデルをデプロイし、デプロイの詳細をカスタマイズして、**[1 分あたりのトークン数のレート制限]** を 50K (50K 未満の場合は利用可能な最大) に設定します。
+
+    > **注**:TPM を減らすと、ご利用のサブスクリプション内で使用可能なクォータが過剰に消費されることを回避するのに役立ちます。 この演習で使用するデータには、50,000 TPM で十分です。 使用可能なクォータがこれより低い場合は、演習を完了できますが、レート制限を超えるとエラーが発生する可能性があります。
+
+1. プロジェクトが作成されると、モデルをテストできるようにチャットプレイグラウンドが自動的に開かれます。
 1. **[セットアップ]** ウィンドウで、モデル デプロイの名前をメモします (**gpt-4o** のはずです)。 これを確認するには、**[モデルとエンドポイント]** ページでデプロイを表示します (左側のナビゲーション ウィンドウでそのページを開くだけです)。
 1. 左側のナビゲーション ウィンドウで **[概要]** を選択すると、プロジェクトのメイン ページが表示されます。次のようになります。
 
@@ -40,14 +49,15 @@ lab:
 
 ## モデルとチャットするクライアント アプリケーションを作成する
 
-これでモデルをデプロイしたので、Azure AI Foundry SDKと Azure AI モデル推論 SDK を使用して、モデルとチャットするアプリケーションを開発できます。
-
-> **ヒント**: Python または Microsoft C# を使用してソリューションを開発することを選択できます。 選択した言語の適切なセクションの指示に従います。
+これでモデルをデプロイしたので、Azure AI Foundry SDK と Azure OpenAI SDK を使用して、モデルとチャットするアプリケーションを開発できます。
 
 ### アプリケーション構成を準備する
 
 1. Azure AI Foundry ポータルで、プロジェクトの **[概要]** ページを表示します。
-1. **[プロジェクトの詳細]** エリアの **[Azure AI Foundry プロジェクト エンドポイント]** をメモします。 クライアント アプリケーションで、このエンドポイントを使用してプロジェクトに接続します。
+1. **[エンドポイントとキー]** の領域で、**[Azure AI Foundry]** ライブラリが選択されていることを確認し、**[Azure AI Foundry プロジェクト エンドポイント]** を表示します。 クライアント アプリケーションで、このエンドポイントを使用してプロジェクトとモデルに接続します。
+
+    > **注**:Azure OpenAI エンドポイントを使用することもできます。
+
 1. 新しいブラウザー タブを開きます (既存のタブで Azure AI Foundry ポータルを開いたままにします)。 新しいブラウザー タブで [Azure portal](https://portal.azure.com) (`https://portal.azure.com`) を開き、メッセージに応じて Azure 資格情報を使用してサインインします。
 
     ウェルカム通知を閉じて、Azure portal のホーム ページを表示します。
@@ -71,58 +81,31 @@ lab:
 
     > **ヒント**: Cloudshell にコマンドを入力すると、出力が大量のスクリーン バッファーを占有する可能性があります。 `cls` コマンドを入力して、各タスクに集中しやすくすることで、スクリーンをクリアできます。
 
-1. リポジトリが複製されたら、チャット アプリケーションのコード ファイルを含んだフォルダーに移動します。
-
-    選択したプログラミング言語に応じて、次のコマンドを使用します。
-
-    **Python**
+1. リポジトリが複製されたら、チャット アプリケーションのコード ファイルを含んだフォルダーに移動して、それらを表示します。
 
     ```
    cd mslearn-ai-foundry/labfiles/chat-app/python
+   ls -a -l
     ```
 
-    **C#**
-
-    ```
-   cd mslearn-ai-foundry/labfiles/chat-app/c-sharp
-    ```
+    フォルダーには、コード ファイルだけでなく、アプリケーション設定の設定ファイルや、プロジェクトのランタイムおよびパッケージの要件を定義するファイルが含まれています。
 
 1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、使用するライブラリをインストールします。
-
-    **Python**
 
     ```
    python -m venv labenv
    ./labenv/bin/Activate.ps1
-   pip install python-dotenv azure-identity azure-ai-projects azure-ai-inference
+   pip install -r requirements.txt azure-identity azure-ai-projects openai
     ```
-
-    **C#**
-
-    ```
-   dotnet add package Azure.Identity
-   dotnet add package Azure.AI.Projects --version 1.0.0-beta.9
-   dotnet add package Azure.AI.Inference --version 1.0.0-beta.5
-    ```
-    
-
 1. 次のコマンドを入力して、提供されている構成ファイルを編集します。
-
-    **Python**
 
     ```
    code .env
     ```
 
-    **C#**
-
-    ```
-   code appsettings.json
-    ```
-
     このファイルをコード エディターで開きます。
 
-1. コード ファイルで、**your_project_endpoint** プレースホルダーをプロジェクトのエンドポイント (Azure AI Foundry ポータルでプロジェクトの **[概要]** ページからコピーしたもの) に置き換え、**your_model_deployment** プレースホルダーをお使いの gpt-4 モデル デプロイの名前に置き換えます。
+1. コード ファイルで、**your_project_endpoint** プレースホルダーを (Azure AI Foundry ポータルの **[概要]** ページからコピーした) プロジェクトの **Azure AI Foundry プロジェクト エンドポイント**に置き換え、**your_model_deployment** プレースホルダーをお使いの gpt-4 モデル デプロイの名前に置き換えます。
 1. プレースホルダーを置き換えたら、コード エディター内で、**Ctrl + S** コマンドを使用するか、**右クリックして保存**で変更を保存してから、**Ctrl + Q** コマンドを使用するか、**右クリックして終了**で、Cloud Shell コマンド ラインを開いたままコード エディターを閉じます。
 
 ### プロジェクトに接続してモデルとチャットするためのコードを記述する
@@ -131,126 +114,62 @@ lab:
 
 1. 次のコマンドを入力して、提供されているコード ファイルを編集します。
 
-    **Python**
-
     ```
    code chat-app.py
     ```
 
-    **C#**
-
-    ```
-   code Program.cs
-    ```
-
 1. コード ファイルで、ファイルの先頭に追加された既存のステートメントを書き留めて、必要な SDK 名前空間をインポートします。 次に、コメント**参照の追加**を探して、次のコードを追加し、前にインストールしたライブラリの名前空間を参照します。
-
-    **Python**
 
     ```python
    # Add references
-   from dotenv import load_dotenv
-   from urllib.parse import urlparse
    from azure.identity import DefaultAzureCredential
-   from azure.ai.inference import ChatCompletionsClient
-   from azure.ai.inference.models import SystemMessage, UserMessage, AssistantMessage
-    ```
-
-    **C#**
-
-    ```csharp
-   // Add references
-   using Azure.Identity;
-   using Azure.AI.Projects;
-   using Azure.AI.Inference;
+   from azure.ai.projects import AIProjectClient
+   from openai import AzureOpenAI
     ```
 
 1. **main** 関数のコメント**構成設定の取得**で、構成ファイルで定義したプロジェクト接続文字列とモデル デプロイ名の値がコードで読み込まれることに注意してください。
-1. コメント**チャット クライアントの取得**を探して、次のコードを追加し、モデルとチャットするためのクライアント オブジェクトを作成します。
+1. コメント **Initialize the project client** を見つけて、次のコードを追加し、Azure AI Foundry プロジェクトに接続します。
 
     > **ヒント**: コードのインデント レベルを正しく維持するように注意してください。
 
-    **Python**
+    ```python
+   # Initialize the project client
+   project_client = AIProjectClient(            
+            credential=DefaultAzureCredential(
+                exclude_environment_credential=True,
+                exclude_managed_identity_credential=True
+            ),
+            endpoint=project_endpoint,
+        )
+    ```
+
+1. コメント**チャット クライアントの取得**を探して、次のコードを追加し、モデルとチャットするためのクライアント オブジェクトを作成します。
 
     ```python
    # Get a chat client
-   inference_endpoint = f"https://{urlparse(project_endpoint).netloc}/models"
-
-   credential = DefaultAzureCredential(exclude_environment_credential=True,
-                                        exclude_managed_identity_credential=True,
-                                        exclude_interactive_browser_credential=False)
-
-   chat = ChatCompletionsClient(
-            endpoint=inference_endpoint,
-            credential=credential,
-            credential_scopes=["https://ai.azure.com/.default"])
+   openai_client = project_client.inference.get_azure_openai_client(api_version="2024-10-21")
     ```
-
-    **C#**
-
-    ```csharp
-   // Get a chat client
-   DefaultAzureCredentialOptions options = new()More actions
-           { ExcludeEnvironmentCredential = true,
-            ExcludeManagedIdentityCredential = true };
-   var projectClient = new AIProjectClient(
-            new Uri(project_connection),
-            new DefaultAzureCredential(options));
-   ChatCompletionsClient chat = projectClient.GetChatCompletionsClient();
-    ```
-
-    > **注**: このコードは、Azure AI Foundry プロジェクト クライアントを使用して、プロジェクトに関連付けられている既定の Azure AI モデル推論サービス エンドポイントへの安全な接続を作成します。 また、Azure AI モデル推論 SDK を使用し、Azure AI Foundry ポータルまたは Azure portal の対応する Azure AI Services リソース ページでサービス接続に表示されるエンドポイント URI を指定し、認証キーまたは Entra 資格情報トークンを使用して、エンドポイントに*直接*接続することもできます。 Azure AI モデル推論サービスへの接続の詳細については、「[Azure AI モデル推論 API](https://learn.microsoft.com/azure/machine-learning/reference-model-inference-api)」をご覧ください。
 
 1. コメント**プロンプトの初期化**を探して、次のコードを追加し、システム プロンプトを使用してメッセージのコレクションを初期化します。
 
-    **Python**
-
     ```python
    # Initialize prompt with system message
-   prompt=[
-            SystemMessage("You are a helpful AI assistant that answers questions.")
+   prompt = [
+            {"role": "system", "content": "You are a helpful AI assistant that answers questions."}
         ]
-    ```
-
-    **C#**
-
-    ```csharp
-   // Initialize prompt with system message
-   var prompt = new List<ChatRequestMessage>(){
-                    new ChatRequestSystemMessage("You are a helpful AI assistant that answers questions.")
-                };
     ```
 
 1. コードには、ユーザーが「quit」と入力するまでプロンプトを入力できるようにするループが含まれていることに注意してください。 次に、ループ セクションで、コメント **チャット完了の取得**を探して、次のコードを追加し、ユーザー入力をプロンプトに追加し、モデルから完了を取得し、プロンプトに完了を追加します (今後の反復のためにチャット履歴を保持します)。
 
-    **Python**
-
     ```python
    # Get a chat completion
-   prompt.append(UserMessage(input_text))
-   response = chat.complete(
-        model=model_deployment,
-        messages=prompt)
+   prompt.append({"role": "user", "content": input_text})
+   response = openai_client.chat.completions.create(
+            model=model_deployment,
+            messages=prompt)
    completion = response.choices[0].message.content
    print(completion)
-   prompt.append(AssistantMessage(completion))
-    ```
-
-    **C#**
-
-    ```csharp
-   // Get a chat completion
-   prompt.Add(new ChatRequestUserMessage(input_text));
-   var requestOptions = new ChatCompletionsOptions()
-   {
-       Model = model_deployment,
-       Messages = prompt
-   };
-
-   Response<ChatCompletions> response = chat.Complete(requestOptions);
-   var completion = response.Value.Content;
-   Console.WriteLine(completion);
-   prompt.Add(new ChatRequestAssistantMessage(completion));
+   prompt.append({"role": "assistant", "content": completion})
     ```
 
 1. **CTRL + S** コマンドを使用して、変更をコード ファイルに保存します。
@@ -270,19 +189,9 @@ lab:
 1. メッセージが表示されたら、指示に従って新しいタブでサインイン ページを開き、指定された認証コードと Azure 資格情報を入力します。 次に、コマンド ラインでサインイン プロセスを完了し、プロンプトが表示されたら、Azure AI Foundry ハブを含むサブスクリプションを選択します。
 1. サインインしたら、次のコマンドを入力してアプリケーションを実行します。
 
-    **Python**
-
     ```
    python chat-app.py
     ```
-
-    **C#**
-
-    ```
-   dotnet run
-    ```
-
-    > **ヒント**: .NET バージョン 9.0 がインストールされていないためにコンパイル エラーが発生した場合は、`dotnet --version` コマンドを使用して、環境にインストールされている .NET のバージョンを確認し、コード フォルダー内の **chat_app.csproj** ファイルを編集して **TargetFramework** 設定を適宜更新します。
 
 1. メッセージが表示されたら、`What is the fastest animal on Earth?` などの質問を入力し、生成 AI モデルからの応答を確認します。
 1. `Where can I see one?`や`Are they endangered?`など、フォローアップの質問をお試しください。 各反復の背景情報であるチャット履歴を使用して、会話を続行する必要があります。
