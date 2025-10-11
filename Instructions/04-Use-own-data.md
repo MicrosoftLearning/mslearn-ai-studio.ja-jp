@@ -175,8 +175,8 @@ RAG ベースのプロンプト フローでインデックスを使用する前
     このファイルをコード エディターで開きます。
 
 1. 設定ファイルで次のプレースホルダーを置き換えます。 
-    - **your_openai_endpoint**: Azure AI Foundry ポータルのプロジェクトの **[概要]** ページの Open AI エンドポイント (Azure AI 推論または Azure AI サービスの機能ではなく、必ず **[Azure OpenAI]** 機能タブを選択してください)。
-    - **your_openai_api_key**: Azure AI Foundry ポータルのプロジェクトの **[概要]** ページの Open AI API キー (Azure AI 推論または Azure AI サービスの機能ではなく、必ず **[Azure OpenAI]** 機能タブを選択してください)。
+    - **your_openai_endpoint**: Azure AI Foundry ポータルのプロジェクトの **[概要]** ページの Open AI エンドポイント (必ず **[Azure OpenAI]** 機能タブを選んでください)。
+    - **your_openai_api_key**: Azure AI Foundry ポータルのプロジェクトの **[概要]** ページの Open AI API キー (必ず **[Azure OpenAI]** 機能タブを選んでください)。
     - **your_chat_model**: Azure AI Foundry ポータルの **[モデル + エンドポイント]** ページから、**gpt-4o** モデル デプロイに割り当てた名前 (既定の名前は `gpt-4o`)。
     - **your_embedding_model**: Azure AI Foundry ポータルの **[モデル + エンドポイント]** ページから、**text-embedding-ada-002** モデル デプロイに割り当てた名前 (既定の名前は `text-embedding-ada-002`)。
     - **your_search_endpoint**: Azure AI 検索リソースの URL。 これは、Azure AI Foundry ポータルの **[管理センター]** にあります。
