@@ -93,7 +93,7 @@ Azure portal を使用してリソースのプロビジョニングを検証す�
     - **Azure AI プロジェクト**: ハブの子。 オーケストレーション、カスタマイズ用のアプリ コンポーネントをグループ化します。
     - **Azure AI サービス**: モデル エンドポイントを管理します。
 
-    ![Azure AI Foundry アーキテクチャ](./media/resource-provider-connected-resources.svg)
+    ![Azure AI Foundry のアーキテクチャ](./media/resource-provider-connected-resources.svg)
 
 1. 次に、クエリ駆動型の取得用に製品と顧客のデータを格納することで[取得拡張生成](https://learn.microsoft.com/azure/ai-studio/concepts/retrieval-augmented-generation)設計パターンを実装するための、2 つの主要なリソースがプロビジョニングされたことを確認します。
 
