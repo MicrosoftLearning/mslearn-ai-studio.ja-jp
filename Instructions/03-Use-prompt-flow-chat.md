@@ -46,7 +46,7 @@ Azure AI Foundry のプロンプト フロー ツールは、Blob Storage 内の
 
     ![Azure portal の [ストレージ アカウント アクセス制御] ページのスクリーンショット。](./media/storage-access-control.png)
 
-1. Azure AI Foundry リソースで使用されるマネージド ID の `Storage blob data reader` ロールにロールの割り当てを追加します。
+1. Azure AI Foundry プロジェクトのリソースで使用されるマネージド ID の `Storage blob data reader` ロールにロールの割り当てを追加します。
 
     ![Azure portal の [ストレージ アカウント アクセス制御] ページのスクリーンショット。](./media/assign-role-access.png)
 
