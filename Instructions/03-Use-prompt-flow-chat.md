@@ -96,7 +96,7 @@ Foundry のプロンプト フロー ツールは、Blob Storage 内のフォル
     - **Api**: chat
     - **deployment_name**: *デプロイした GPT-4o モデル*
     - **[response_format]**: {"type":"text"}
-1. **[プロンプト]** フィールドを次のように変更します。
+1. 次のように **Prompt** フィールドを変更し、YAML ループ内の `\` エスケープを削除します。
 
    ```yml
    # system:
@@ -116,15 +116,15 @@ Foundry のプロンプト フロー ツールは、Blob Storage 内のフォル
    4. Ensure recommendations are practical and consider the user's safety and comfort.
    5. Encourage the user to ask follow-up questions for further assistance.
 
-   {% for item in chat_history %}
+   \{\% for item in chat_history \%\}
    # user:
-   {{item.inputs.question}}
+   \{\{item.inputs.question\}\}
    # assistant:
-   {{item.outputs.answer}}
-   {% endfor %}
+   \{\{item.outputs.answer\}\}
+   \{\% endfor \%\}
 
    # user:
-   {{question}}
+   \{\{question\}\}
    ```
 
     追加したプロンプトを読んで、それを熟知します。 これは、システム メッセージ (目的、機能の定義、およびいくつかの指示を含む) とチャット履歴 (各ユーザーの質問入力と以前のアシスタントの回答出力を表示するように並べ替え済) で構成されます。
