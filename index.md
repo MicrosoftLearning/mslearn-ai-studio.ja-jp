@@ -12,7 +12,7 @@ layout: home
 
 <hr>
 
-{% assign labs = site.pages | where_exp:"page", "page.url contains '/Instructions'" %} {% for activity in labs  %} {% if activity.lab.title %}
+{% assign labs = site.pages | where_exp:"page", "page.url contains '/Instructions/Exercises'" %} {% for activity in labs  %} {% if activity.lab.title %}
 ### [{{ activity.lab.title }}]({{ site.github.url }}{{ activity.url }})
 
 
