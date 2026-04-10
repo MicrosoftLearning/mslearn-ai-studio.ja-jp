@@ -1,10 +1,18 @@
 ---
 lab:
-  title: 生成 AI チャット アプリを作成する
+  title: 生成 AI チャット アプリを作成する (非推奨)
   description: Microsoft Foundry SDK を使用して、プロジェクトに接続して言語モデルとチャットするアプリを構築する方法を学習します。
+  duration: 40 minutes
+  level: 400
+  islab: false
+  primarytopics:
+    - Microsoft Foundry
+    - Microsoft Foundry SDK
 ---
 
-# 生成 AI チャット アプリを作成する
+# 生成 AI チャット アプリを作成する (非推奨)
+
+> **注**: この演習は非推奨です。 代わりの演習 (<https://go.microsoft.com/fwlink/?linkid=2354411>) を行うことを検討してください。
 
 この演習では、Microsoft Foundry Python SDK を使用して、プロジェクトに接続して言語モデルとチャットするシンプルなチャット アプリを作成します。
 
@@ -90,10 +98,24 @@ lab:
 1. Cloud Shell コマンド ライン ペインで、次のコマンドを入力して、使用するライブラリをインストールします。
 
     ```
+   # Create a Python virtual environment
    python -m venv labenv
-   ./labenv/bin/Activate.ps1
+   
+   # Activate the virtual environment
+
+   # On Bash (Linux, macOS, or Cloud Shell)
+   source labenv/bin/activate
+
+   # On Windows PowerShell
+   .\labenv\Scripts\Activate.ps1
+
+   # On Windows Command Prompt
+   Scripts\activate.bat
+
+   # Install required packages
    pip install -r requirements.txt azure-identity azure-ai-projects openai
     ```
+
 1. 次のコマンドを入力して、提供されている構成ファイルを編集します。
 
     ```
@@ -184,7 +206,7 @@ lab:
     **<font color="red">Cloud Shell セッションが既に認証されている場合でも、Azure にサインインする必要があります。</font>**
 
     > **注**: ほとんどのシナリオでは、*az ログイン*を使用するだけで十分です。 ただし、複数のテナントにサブスクリプションがある場合は、*[--tenant]* パラメーターを使用してテナントを指定する必要があります。 詳細については、「[Azure CLI を使用して対話形式で Azure にサインインする](https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively)」を参照してください。
-    
+
 1. メッセージが表示されたら、指示に従って新しいタブでサインイン ページを開き、指定された認証コードと Azure 資格情報を入力します。 次に、コマンド ラインでサインイン プロセスを完了し、プロンプトが表示されたら、Foundry ハブを含むサブスクリプションを選択します。
 1. サインインしたら、次のコマンドを入力してアプリケーションを実行します。
 
