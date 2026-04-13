@@ -1,10 +1,15 @@
 ---
 lab:
-  title: 言語モデルを微調整する
+  title: 言語モデルを微調整する (非推奨)
   description: 自前のトレーニング データを使用して、モデルを微調整したり、モデルの動作をカスタマイズしたりする方法について学習します。
+  duration: 30 minutes
+  level: 200
+  islab: false
 ---
 
-# 言語モデルを微調整する
+# 言語モデルを微調整する (非推奨)
+
+> **注**: この演習は非推奨です。 代わりの演習 (<https://go.microsoft.com/fwlink/?linkid=2354220>) を行うことを検討してください。
 
 言語モデルを特定の方法で動作させる場合は、プロンプト エンジニアリングを使用して目的の動作を定義できます。 目的の動作の一貫性を向上させる場合は、モデルを微調整し、プロンプト エンジニアリングのアプローチと比較して、ニーズに最も適した方法を評価することができます。
 
@@ -95,11 +100,13 @@ lab:
     You should not provide any hotel, flight, rental car or restaurant recommendations.
     Ask engaging questions to help someone plan their trip and think about what they want to do on their holiday.
     ```
+
 から始めます。
+
 1. チャット アプリケーションのテストを続けて、取得したデータに基づかない情報が提供されていないことを確認します。 たとえば、次の質問をして、モデルの回答を確認し、モデルが応答する際に使用するトーンと書き方に特に注意を払います。
-   
+
     `Where in Rome should I stay?`
-    
+
     `I'm mostly there for the food. Where should I stay to be within walking distance of affordable restaurants?`
 
     `What are some local delicacies I should try?`
