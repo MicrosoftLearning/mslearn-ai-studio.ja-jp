@@ -1,7 +1,7 @@
 ---
 lab:
   title: AI 開発プロジェクトの準備
-  description: Microsoft Foundry プロジェクトで AI リソースを整理し、Visual Studio Code 用の AI Toolkit 拡張機能の使用を開始する方法について学習します。
+  description: Microsoft Foundry プロジェクトで AI リソースを整理し、Visual Studio Code 用の Foundry Toolkit 拡張機能の使用を開始する方法を学びます。
   level: 200
   duration: 30
   islab: true
@@ -112,27 +112,29 @@ Microsoft Foundry では "プロジェクト" を使って、AI ソリューシ�
     - "プロジェクト エンドポイント" は、OpenAI の**Responses** API を使用して Foundry で直接提供されるモデル (OpenAI モデルを含む) にアクセスしたり、Foundry 固有の API (Foundry Agent サービスなど) にアクセスしたりするために使用されます。**
     - "OpenAI エンドポイント" は、**Chat Completions** API、**Responses** API など、OpenAI の API を使用してモデルにアクセスするために使用されます。**
 
-## Visual Studio Code 用に AI Toolkit 拡張機能をインストールする
+## Visual Studio Code 用の Foundry Toolkit 拡張機能をインストールする
 
-開発者は、Foundry ポータルである程度の時間作業しますが、Visual Studio Code でも多くの時間を費やす可能性があります。 AI Toolkit 拡張機能は、開発環境を離れることなく Foundry プロジェクト リソースを操作するための便利な方法を提供します。
+開発者は、Foundry ポータルである程度の時間作業しますが、Visual Studio Code でも多くの時間を費やす可能性があります。 Foundry Toolkit 拡張機能は、開発環境を離れることなく Foundry プロジェクト リソースを操作するための便利な方法を提供します。
 
-1. Visual Studio Code を開き、左側のナビゲーション バーで **[拡張機能]** ページを表示します。
+1. Visual Studio Code を起動する
+1. 左側のナビゲーション バーで、**[拡張機能]** ページを表示します。
+1. 拡張機能のマーケットプレースで `Foundry Toolkit` を検索し、**[Foundry Toolkit for VS Code]** 拡張機能をインストールします。
 
-    ![Visual Studio Code の拡張機能のページのスクリーンショット。](../media/vscode-extensions.png)
+    拡張機能のインストールには 1 分ほどかかる場合があります。
 
-1. 拡張機能のマーケットプレースで「`AI Toolkit`」と検索し、**[AI Toolkit]** 拡張機能をインストールします。
-1. 拡張機能をインストールしたら、左側のナビゲーション バーでそのページを選択します。
+1. 拡張機能をインストールした後、左側のナビゲーション バーで **[AI ツールキット]** ページを選び、読み込まれるまで待ちます。
 
-    ![AI Toolkit の Visual Studio Code 拡張機能のスクリーンショット。](../media/foundry-vs-extension.png)
+    ![Foundry Toolkit for Visual Studio Code 拡張機能のスクリーンショット。](../media/foundry-vs-extension.png)
 
-1. [AI Toolkit] ペインで、**[既定のプロジェクトの設定]** ボタンを使用して Azure に接続し (ご自分の資格情報でサインインします)、前に作成した Foundry プロジェクトを選択します。
-1. 既定のプロジェクトを設定した後、[AI Toolkit] ペインでプロジェクトを展開し、**[モデル]** を展開し、前にデプロイした **[gpt-4.1]** モデルを選択します。
+1. [Foundry Toolkit] ペインで、**[Microsoft Foundry リソース]** を展開し、Azure に接続し (ご自分の資格情報でサインインする)、前に作成した Foundry プロジェクトを選択して、既定のプロジェクトを設定します。
+
+1. 既定のプロジェクトを設定した後、プロジェクトを展開し、**[モデル]** を展開して、前にデプロイした **[gpt-4.1]** モデルを選択します。
 
     モデル デプロイの詳細については、こちらをご覧ください。
 
-    ![AI Toolkit の Visual Studio Code 拡張機能のモデルのスクリーンショット。](../media/vscode-extension-model.png)
+    ![Foundry Toolkit for Visual Studio Code 拡張機能のモデルのスクリーンショット。](../media/vscode-extension-model.png)
 
-1. [AI Toolkit] ペインの **[開発者ツール]** セクションで、**[モデル プレイグラウンド]** を選択し、**[gpt-4.1]** モデルを選択します。
+1. [Foundry Toolkit] ペインの **[開発者ツール]** セクションで、**[ビルド]** を展開し、**[モデル プレイグラウンド]** を選択します。 次に、**[gpt-4.1]** モデルを選択します (まだ選択されていない場合)。
 
     モデルをテストできる対話型のプレイグラウンドが Visual Studio Code で開きます。
 
@@ -140,7 +142,7 @@ Microsoft Foundry では "プロジェクト" を使って、AI ソリューシ�
 
 ## まとめ
 
-この演習では、Microsoft Foundry を作成し、Foundry ポータルで詳しく調べました。 また、開発者が Foundry プロジェクトとその資産を操作するのに便利な方法が提供される、Visual Studio Code の AI Toolkit 拡張機能についても調べました。
+この演習では、Microsoft Foundry を作成し、Foundry ポータルで詳しく調べました。 また、Visual Studio Code の Foundry Toolkit 拡張機能についても調べました。これは、開発者が Foundry プロジェクトとそのアセットを操作するための便利な方法を提供します。
 
 ## クリーンアップ
 
