@@ -36,7 +36,7 @@ Microsoft Foundry では "プロジェクト" を使って、AI ソリューシ�
     - **Foundry リソース**: "リソースの既定の名前を使用します (通常は {project_name}-resource)"**
     - **[サブスクリプション]**:"*ご自身の Azure サブスクリプション*"
     - **リソース グループ**: *リソース グループを作成または選択します*
-    - **[リージョン]**: **[AI Foundry 推奨]** のリージョンのいずれかを選択します。
+    - **リージョン**: **[こちらの一覧](https://learn.microsoft.com/azure/foundry/openai/how-to/responses#region-availability)**{:target="_blank"}にある、**AI Foundry の推奨**リージョンのいずれかを選択します
 
 1. プロジェクトが作成されるまで待ちます。 次に、そのホーム ページを表示します。
 
