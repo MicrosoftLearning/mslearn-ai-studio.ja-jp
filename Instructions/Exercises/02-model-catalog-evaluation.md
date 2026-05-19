@@ -96,8 +96,7 @@ Microsoft Foundry Models には、プロジェクトで使用できるモデル�
 2 つのモデル デプロイが作成されたので、プレイグラウンドでそれらを比較してみましょう。
 
 1. プレイグラウンドの、**[モデル]** リストで **[gpt-4.1-mini]** モデルのデプロイが選択されていることを確認し、ページの右側にある **[モデルの比較]** リストで、**[gpt-4.1]** モデルのデプロイを選択します。
-1. 両方のモデルの **[セットアップ]** タブを選択し、**[指示]** を `You are an AI assistant that helps solve problems.` に設定します
-1. 両方のモデルの **[チャット]** タブを選択し、次のプロンプトを入力します。
+1. 左右に並べて表示する比較ビューには、各モデルの個別のチャット ペインが直接開かれます。 両方のモデルの **[チャット]** タブを選択し、次のプロンプトを入力します。
 
     ```
    I have a fox, a chicken, and a bag of grain that I need to take over a river in a boat. I can only take one thing at a time. If I leave the chicken and the grain unattended, the chicken will eat the grain. If I leave the fox and the chicken unattended, the fox will eat the chicken. How can I get all three things across the river without anything being eaten?
@@ -120,7 +119,7 @@ Microsoft Foundry Models には、プロジェクトで使用できるモデル�
 1. プレイグラウンドで、**[評価]** タブを選択します。
 1. **[作成]** を選択して **[新しい評価を作成する]** ウィザードを開きます。
 1. 評価対象として、**[モデル]** を選択します。
-1. モデルのテーブルで **[gpt-4.1]** のデプロイを選択し、**[次へ]** を選択します。
+1. モデルのテーブルで、事前に選択されているデプロイの選択を解除し、**[gpt-4.1]** のチェックボックスのみが選択された状態にしてから、**[次へ]** を選択します。
 
 ### 手順 2: データ
 
