@@ -5,6 +5,7 @@ lab:
   level: 300
   duration: 90
   islab: true
+  status: released
 ---
 
 # 言語モデルを微調整する
