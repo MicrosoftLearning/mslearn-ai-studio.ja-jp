@@ -4,6 +4,8 @@ lab:
   description: OpenAI SDK と Responses API を使用して、Microsoft Foundry にデプロイされたモデルに接続するチャット アプリを構築する方法について説明します。
   level: 300
   duration: 45
+  islab: true
+  status: released
 ---
 
 # 生成 AI チャット アプリを作成する

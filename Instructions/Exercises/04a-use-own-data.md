@@ -5,6 +5,7 @@ lab:
   level: 300
   duration: 30
   islab: true
+  status: released
 ---
 
 # ツールを使用する生成 AI アプリを作成する

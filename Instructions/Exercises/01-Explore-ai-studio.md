@@ -5,6 +5,7 @@ lab:
   level: 200
   duration: 30
   islab: true
+  status: released
   primarytopics:
     - Microsoft Foundry
     - Visual Studio Code

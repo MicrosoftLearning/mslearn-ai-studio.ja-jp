@@ -5,6 +5,7 @@ lab:
   level: 300
   duration: 25
   islab: true
+  status: released
 ---
 
 # ガードレールを適用して有害なコンテンツの出力を防ぐ
